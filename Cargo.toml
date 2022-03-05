@@ -1,0 +1,38 @@
+[workspace]
+members = [
+  ".",
+  "sqlx-crud-macros",
+]
+
+[package]
+name = "sqlx-crud"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = ["runtime-tokio-rustls"]
+runtime-actix-native-tls = [
+    "sqlx/runtime-actix-native-tls",
+]
+runtime-async-std-native-tls = [
+    "sqlx/runtime-async-std-native-tls",
+]
+runtime-tokio-native-tls = [
+    "sqlx/runtime-tokio-native-tls",
+]
+
+runtime-actix-rustls = [
+    "sqlx/runtime-actix-rustls",
+]
+runtime-async-std-rustls = [
+    "sqlx/runtime-async-std-rustls",
+]
+runtime-tokio-rustls = [
+    "sqlx/runtime-tokio-rustls",
+]
+
+[dependencies]
+futures = "0"
+sqlx = { version = "0" }
+sqlx-crud-macros = { path = "sqlx-crud-macros" }
+thiserror = "1"

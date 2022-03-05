@@ -1,0 +1,104 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+AsDynError	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/aserror.rs	/^pub trait AsDynError<'a> {$/;"	t
+Crud	/home/trey/code/sqlx-crud/src/traits.rs	/^pub trait Crud<'e, E>$/;"	t
+CrudFut	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type CrudFut<'e, T> = Pin<Box<dyn Future<Output = Result<T, sqlx::Error>> + 'e>>;$/;"	T
+CrudStream	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type CrudStream<'e, T> =$/;"	T
+DisplayAsDisplay	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/display.rs	/^pub trait DisplayAsDisplay {$/;"	t
+Error	/home/trey/code/sqlx-crud/src/error.rs	/^pub enum Error {$/;"	g
+Id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                type Id = #id_ty;$/;"	T
+Id	/home/trey/code/sqlx-crud/src/traits.rs	/^    type Id: Send;$/;"	T
+MatchBorrow	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub struct MatchBorrow<T, U>(PhantomData<T>, PhantomData<U>);$/;"	s
+MatchBorrowExt	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub trait MatchBorrowExt: Sized {$/;"	t
+Matched	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Matched = &'a [u8];$/;"	T
+Matched	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Matched = &'a str;$/;"	T
+Matched	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Matched = Option<&'a [u8]>;$/;"	T
+Matched	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Matched = Option<&'a str>;$/;"	T
+Matched	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Matched = Option<T>;$/;"	T
+Matched	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Matched = T;$/;"	T
+Matched	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Matched = U;$/;"	T
+Matched	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Matched;$/;"	T
+Metadata	/home/trey/code/sqlx-crud/src/schema.rs	/^pub struct Metadata<'s, const C: usize> {$/;"	s
+PathAsDisplay	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/display.rs	/^pub trait PathAsDisplay {$/;"	t
+Schema	/home/trey/code/sqlx-crud/src/traits.rs	/^pub trait Schema {$/;"	t
+TryCollectFut	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type TryCollectFut<'e, T> = TryCollect<CrudStream<'e, T>, Vec<T>>;$/;"	T
+WrapSame	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub struct WrapSame<T, U>(PhantomData<T>, PhantomData<U>);$/;"	s
+WrapSameExt	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub trait WrapSameExt: Sized {$/;"	t
+Wrapped	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Wrapped = Option<T>;$/;"	T
+Wrapped	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Wrapped = T;$/;"	T
+Wrapped	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    type Wrapped;$/;"	T
+_rename	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/lib.rs	/^pub fn _rename() {}$/;"	f
+all	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn all(pool: E) -> TryCollectFut<'e, Self> {$/;"	f
+as_display	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/display.rs	/^    fn as_display(&self) -> Self {$/;"	f
+as_display	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/display.rs	/^    fn as_display(&self) -> Self;$/;"	f
+as_display	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/display.rs	/^    fn as_display(&self) -> path::Display<'_> {$/;"	f
+as_display	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/display.rs	/^    fn as_display(&self) -> path::Display<'_>;$/;"	f
+as_dyn_error	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/aserror.rs	/^    fn as_dyn_error(&self) -> &(dyn Error + 'a) {$/;"	f
+as_dyn_error	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/aserror.rs	/^    fn as_dyn_error(&self) -> &(dyn Error + 'a);$/;"	f
+build_sql_queries	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sql_queries(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenStream2 {$/;"	f
+build_sqlx_crud_impl	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sqlx_crud_impl($/;"	f
+build_static_model_schema	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_static_model_schema(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenStream2 {$/;"	f
+by_id	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn by_id(pool: E, id: <Self as Schema>::Id) -> CrudFut<'e, Option<Self>> {$/;"	f
+columns	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn columns() -> &'static [&'static str] {$/;"	f
+columns	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn columns() -> &'static [&'static str];$/;"	f
+compat	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.3.21/src/lib.rs	/^pub mod compat {$/;"	m
+conjure_value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub fn conjure_value<T>() -> T {$/;"	f
+create	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn create(&'e self, pool: E) -> CrudFut<'e, ()> {$/;"	f
+db_type	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn db_type(attrs: &[Attribute]) -> TokenStream2 {$/;"	f
+decode	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/lib.rs	/^pub mod decode {$/;"	m
+delete	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn delete(self, pool: E) -> CrudFut<'e, ()> {$/;"	f
+delete_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn delete_by_id_sql() -> &'static str {$/;"	f
+delete_by_id_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn delete_by_id_sql() -> &'static str;$/;"	f
+derive	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^pub fn derive(input: TokenStream) -> TokenStream {$/;"	f
+dupe_value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub fn dupe_value<T>(_t: &T) -> T {$/;"	f
+encode	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/lib.rs	/^pub mod encode {$/;"	m
+executor	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.3.21/src/lib.rs	/^pub mod executor {$/;"	m
+id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn id(&self) -> Self::Id {$/;"	f
+id	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn id(&self) -> Self::Id;$/;"	f
+id_column	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn id_column() -> &'static str {$/;"	f
+id_column	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn id_column() -> &'static str;$/;"	f
+id_column_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn id_column_ident(named: &Punctuated<Field, Comma>) -> &Ident {$/;"	f
+insert_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn insert_binds($/;"	f
+insert_binds	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn insert_binds($/;"	f
+insert_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn insert_sql() -> &'static str {$/;"	f
+insert_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn insert_sql() -> &'static str;$/;"	f
+match_borrow	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    fn match_borrow(self) -> Self::Matched {$/;"	f
+migrate	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! migrate {$/;"	d
+model_schema_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn model_schema_ident(ident: &Ident) -> Ident {$/;"	f
+new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    pub fn new(_arg: &U) -> Self {$/;"	f
+new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    pub fn new(t: T, _u: &U) -> (T, Self) {$/;"	f
+paged	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn paged(_pool: E) -> TryCollectFut<'e, Self> {$/;"	f
+prelude	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.3.21/src/lib.rs	/^pub mod prelude {$/;"	m
+prelude	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/lib.rs	/^pub mod prelude {$/;"	m
+private	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/lib.rs	/^pub mod private {$/;"	m
+query	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/lib.rs	/^pub mod query {$/;"	m
+query	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query ($/;"	d
+query_as	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_as ($/;"	d
+query_as_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_as_unchecked ($/;"	d
+query_file	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_file ($/;"	d
+query_file_as	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_file_as ($/;"	d
+query_file_as_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_file_as_unchecked ($/;"	d
+query_file_scalar	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_file_scalar ($/;"	d
+query_file_scalar_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_file_scalar_unchecked ($/;"	d
+query_file_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_file_unchecked ($/;"	d
+query_scalar	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_scalar ($/;"	d
+query_scalar_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_scalar_unchecked ($/;"	d
+query_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_unchecked ($/;"	d
+same_type	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub fn same_type<T>(_1: &T, _2: &T) {}$/;"	f
+select_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn select_by_id_sql() -> &'static str {$/;"	f
+select_by_id_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn select_by_id_sql() -> &'static str;$/;"	f
+select_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn select_sql() -> &'static str {$/;"	f
+select_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn select_sql() -> &'static str;$/;"	f
+table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn table_name() -> &'static str {$/;"	f
+table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn table_name(ident: &Ident) -> String {$/;"	f
+table_name	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn table_name() -> &'static str;$/;"	f
+test_dupe_value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^fn test_dupe_value() {$/;"	f
+test_match_borrow	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^fn test_match_borrow() {$/;"	f
+test_wrap_same	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^fn test_wrap_same() {$/;"	f
+types	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/lib.rs	/^pub mod types {$/;"	m
+update	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update(&'e self, pool: E) -> CrudFut<'e, ()> {$/;"	f
+update_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn update_binds($/;"	f
+update_binds	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update_binds($/;"	f
+update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn update_by_id_sql() -> &'static str {$/;"	f
+update_by_id_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update_by_id_sql() -> &'static str;$/;"	f
+wrap_same	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    fn wrap_same(self) -> Self::Wrapped {$/;"	f
