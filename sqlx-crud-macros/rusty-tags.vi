@@ -535,6 +535,7 @@ const_params_mut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-
 constraint_bounds	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/path.rs	/^    fn constraint_bounds(input: ParseStream) -> Result<Punctuated<TypeParamBound, Token![+]>> {$/;"	f
 cooked_byte_string	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn cooked_byte_string(mut input: Cursor) -> Result<Cursor, Reject> {$/;"	f
 cooked_string	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn cooked_string(input: Cursor) -> Result<Cursor, Reject> {$/;"	f
+crate_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn crate_name() -> TokenStream2 {$/;"	f
 create	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/buffer.rs	/^    unsafe fn create(mut ptr: *const Entry, scope: *const Entry) -> Self {$/;"	f
 cursor	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/parse.rs	/^    pub fn cursor(&self) -> Cursor<'a> {$/;"	f
 custom_keyword	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/custom_keyword.rs	/^macro_rules! custom_keyword {$/;"	d

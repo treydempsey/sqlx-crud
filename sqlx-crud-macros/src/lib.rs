@@ -19,12 +19,13 @@ pub fn derive(input: TokenStream) -> TokenStream {
             fields: Fields::Named(FieldsNamed { named, .. }),
             ..
         }) => {
+            let crate_name = crate_name();
             let static_model_schema = build_static_model_schema(&ident, &named);
             let sqlx_crud_impl = build_sqlx_crud_impl(&attrs, &ident, &named);
 
             quote! {
                 #[automatically_derived]
-                use ::sqlx_crud::traits::{Crud, Schema};
+                use #crate_name::traits::{Crud, Schema};
 
                 #static_model_schema
 
@@ -37,6 +38,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
 }
 
 fn build_static_model_schema(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenStream2 {
+    let crate_name = crate_name();
     let model_schema_ident = model_schema_ident(ident);
     let table_name = table_name(ident);
 
@@ -51,7 +53,7 @@ fn build_static_model_schema(ident: &Ident, named: &Punctuated<Field, Comma>) ->
 
     quote! {
         #[automatically_derived]
-        static #model_schema_ident: ::sqlx_crud::schema::Metadata<'static, #columns_len> = ::sqlx_crud::schema::Metadata {
+        static #model_schema_ident: #crate_name::schema::Metadata<'static, #columns_len> = #crate_name::schema::Metadata {
             table_name: #table_name,
             id_column: #id_column,
             columns: [#(#columns),*],
@@ -75,6 +77,9 @@ fn build_sql_queries(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenSt
         .collect::<Vec<_>>()
         .join(", ");
 
+    // XXX TODO XXX
+    // Quote identifiers
+    // Qualify columns with table identifiers
     let column_list_idents = named.iter().map(|f| &f.ident);
     let column_list = format!("{}", quote! {#(#column_list_idents), *});
     let select_sql = format!("SELECT {} FROM {}", column_list, table_name);
@@ -82,6 +87,7 @@ fn build_sql_queries(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenSt
         "SELECT {} FROM {} WHERE {} = ? LIMIT 1",
         column_list, table_name, id_column_ident
     );
+    // XXX TODO XXX Explictly list columns `INTO {} (columns...,) VALUES`
     let insert_sql = format!("INSERT INTO {} VALUES ({})", table_name, insert_sql_binds);
     let update_by_id_sql = format!(
         "UPDATE {} SET {} WHERE {} = ?",
@@ -103,6 +109,7 @@ fn build_sqlx_crud_impl(
     ident: &Ident,
     named: &Punctuated<Field, Comma>,
 ) -> TokenStream2 {
+    let crate_name = crate_name();
     let model_schema_ident = model_schema_ident(ident);
     let id_column_ident = id_column_ident(named);
     let id_ty = named
@@ -125,7 +132,7 @@ fn build_sqlx_crud_impl(
 
     quote! {
             #[automatically_derived]
-            impl ::sqlx_crud::traits::Schema for #ident {
+            impl #crate_name::traits::Schema for #ident {
                 type Id = #id_ty;
 
                 fn table_name() -> &'static str {
@@ -166,7 +173,7 @@ fn build_sqlx_crud_impl(
             }
 
             #[automatically_derived]
-            impl<'e> ::sqlx_crud::traits::Crud<'e, &'e ::sqlx::pool::Pool<#db_ty>> for #ident {
+            impl<'e> #crate_name::traits::Crud<'e, &'e ::sqlx::pool::Pool<#db_ty>> for #ident {
                 fn insert_binds(
                     &'e self,
                     query: ::sqlx::query::Query<'e, ::sqlx::Sqlite, ::sqlx::sqlite::SqliteArguments<'e>>
@@ -231,4 +238,16 @@ fn id_column_ident(named: &Punctuated<Field, Comma>) -> &Ident {
             .next()
             .expect("the first field")
     })
+}
+
+fn crate_name() -> TokenStream2 {
+    let crate_name = std::env::var("CARGO_PKG_NAME").unwrap();
+    let is_doctest = std::env::vars().any(|(k, _)| {
+        k == "UNSTABLE_RUSTDOC_TEST_LINE" || k == "UNSTABLE_RUSTDOC_TEST_PATH"
+    });
+    if !is_doctest && crate_name == "sqlx-crud" {
+        quote! { crate }
+    } else {
+        quote! { ::sqlx_crud }
+    }
 }

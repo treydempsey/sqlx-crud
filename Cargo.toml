@@ -11,28 +11,23 @@ edition = "2021"
 
 [features]
 default = ["runtime-tokio-rustls"]
-runtime-actix-native-tls = [
-    "sqlx/runtime-actix-native-tls",
-]
-runtime-async-std-native-tls = [
-    "sqlx/runtime-async-std-native-tls",
-]
-runtime-tokio-native-tls = [
-    "sqlx/runtime-tokio-native-tls",
-]
+runtime-actix-native-tls = ["sqlx/runtime-actix-native-tls"]
+runtime-async-std-native-tls = ["sqlx/runtime-async-std-native-tls"]
+runtime-tokio-native-tls = ["sqlx/runtime-tokio-native-tls"]
+runtime-actix-rustls = ["sqlx/runtime-actix-rustls"]
+runtime-async-std-rustls = ["sqlx/runtime-async-std-rustls"]
+runtime-tokio-rustls = ["sqlx/runtime-tokio-rustls"]
 
-runtime-actix-rustls = [
-    "sqlx/runtime-actix-rustls",
-]
-runtime-async-std-rustls = [
-    "sqlx/runtime-async-std-rustls",
-]
-runtime-tokio-rustls = [
-    "sqlx/runtime-tokio-rustls",
-]
+# The reason we do this is because doctests don't get cfg(test)
+# See: https://github.com/rust-lang/cargo/issues/4669
+doctest = []
 
 [dependencies]
 futures = "0"
 sqlx = { version = "0" }
 sqlx-crud-macros = { path = "sqlx-crud-macros" }
 thiserror = "1"
+
+[dev-dependencies]
+sqlx = { version = "0", features = ["runtime-tokio-rustls", "sqlite"] }
+tokio-test = "0"
