@@ -33,7 +33,7 @@ doctest = []
 [dependencies]
 futures = "0"
 sqlx = { version = "0" }
-sqlx-crud-macros = { path = "sqlx-crud-macros" }
+sqlx-crud-macros = { version = "0.2", path = "sqlx-crud-macros" }
 thiserror = "1"
 
 [dev-dependencies]
