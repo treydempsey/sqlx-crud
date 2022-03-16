@@ -19,13 +19,15 @@ if let Some(user) = User::by_id(&pool, 42) {
 }
 ```
 
-* Single Derive Macro for Structs
+### Notable Features
 
-* Methods to Create, Read, Update, and Delete Records
+    * *Single Derive Macro for Structs*
 
-* Primary Key and Table Name Inference
+    * *Methods to Create, Read, Update, and Delete Records*
 
-* Table Metadata for Reuse
+    * *Primary Key and Table Name Inference*
+
+    * *Table Metadata for Reuse*
 
 This removes much of the common, repetitive code needed when dealing with
 the typical CRUD operations.
