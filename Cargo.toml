@@ -6,8 +6,16 @@ members = [
 
 [package]
 name = "sqlx-crud"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
+readme = "README.md"
+repository = "https://github.com/treydempsey/sqlx-crud"
+documentation = "https://docs.rs/sqlx-crud"
+description = "Derive macro for SQLx to implement Create, Read, Update, and Delete (CRUD) methods for you 🪄 📖 📝 ❌"
+license = "MIT"
+keywords = ["sqlx", "orm", "crud", "database"]
+categories = ["database", "asynchronous", "web-programming"]
+authors = ["Trey Dempsey <trey.dempsey@gmail.com>"]
 
 [features]
 default = ["runtime-tokio-rustls"]
@@ -18,7 +26,7 @@ runtime-actix-rustls = ["sqlx/runtime-actix-rustls"]
 runtime-async-std-rustls = ["sqlx/runtime-async-std-rustls"]
 runtime-tokio-rustls = ["sqlx/runtime-tokio-rustls"]
 
-# The reason we do this is because doctests don't get cfg(test)
+# The reason we do this is because doctests don't get cfg(test)/cfg(doctest)
 # See: https://github.com/rust-lang/cargo/issues/4669
 doctest = []
 
