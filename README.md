@@ -32,13 +32,13 @@ if let Some(user) = User::by_id(&pool, 42) {
 This removes much of the common, repetitive code needed when dealing with
 the typical CRUD operations.
 
-This library strives to do a few, narrowly defined things well in an effort
+sqlx-crud strives to do a few, narrowly defined things well in an effort
 to reduce 80% of the redundant code you might write for a database
 application when operating on a single table at a time. It provides
-mechanisms: [Schema] and [Crud], to access and reuse the generated id,
-column, and query metadata. This can help with writing more complex queries
-outside of the single table CRUD paradigm, but it's primary use case is
-for CRUD.
+mechanisms: [Schema](./src/traits.rs) and [Crud](./src/traits.rs), to access
+and reuse the generated id, column, and query metadata. This can help with
+writing more complex queries outside of the single table CRUD paradigm, but
+its primary use case is for CRUD.
 
 ## Installation
 
@@ -49,7 +49,6 @@ Installing sqlx-crud is similar to installing SQLx.
 [dependencies]
 sqlx-crud = { version = "0", features = ["runtime-tokio-rustls"] }
 ```
-
 
 See the documentation for full usage instructions.
 
@@ -70,8 +69,8 @@ Documentation is hosted at [sqlx-crud docs](https://docs.rs/sqlx-crud/latest).
 
 sqlx-crud does most of what I need it to do, however while packaging it for
 release to others I realized there are several improvements that could be made.
-Planned updates and major achievements are listed in [MILESTONES].
+Planned updates and major achievements are listed in [MILESTONES](./MILESTONES).
 
 ## License
 
-sqlx-crud is licensed under the MIT license (see: [LICENSE]).
+sqlx-crud is licensed under the MIT license (see: [LICENSE](./LICENSE)).
