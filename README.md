@@ -55,12 +55,26 @@ instructions.
 
 ## Features
 
-The features are the same as SQLx `runtime-*` flags and are required because of
-the dependency on SQLx. Hopefully this constraint will be removed in the future.
+sqlx-crud uses the same features as SQLx `runtime-*` flags and are required because of
+the dependency on SQLx.
 
 ## Source code
 
-Source code for sqlx-crud is available at [https://www.github.com/treydempsey/sqlx-crud](https://www.github.com/treydempsey/sqlx-crud).
+Source code for sqlx-crud is available at
+[https://www.github.com/treydempsey/sqlx-crud](https://www.github.com/treydempsey/sqlx-crud).
+
+## Tests
+
+The doctests depend on `SQLx` and it's `runtime-tokio-rustls` and `sqlite`
+features. Due to how `#[cfg(doctest)]` works you can't currently use it to
+conditionally include code to support doctests. I'm using a feature `doctest`
+to allow only building the doctest support code while running doctests.
+
+The tests can be run with:
+
+```sh
+$ cargo test --features doctest
+```
 
 ## Documentation
 

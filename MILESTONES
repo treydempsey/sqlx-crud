@@ -1,0 +1,12 @@
+# Roadmap and Major Milestones
+
+- [x] Use absolute namespaces in the proc_macro
+- [x] Add documentation
+- [x] Add working doctest examples
+- [x] Add readme, license and other support files
+- [ ] Package and release to crates.io
+- [ ] Allow database assigned primary keys
+- [ ] Crud::create() should return the assigned ID
+- [ ] Add a field attribute to ignore fields
+- [ ] Remove SQLx feature flag duplication
+- [ ] Remove doctest feature flag workaround
