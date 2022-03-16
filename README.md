@@ -4,6 +4,21 @@ sqlx-crud is an extension to [SQLx](https://github.com/launchbadge/sqlx) to
 derive Create, Read, Update, and Delete (CRUD) methods for a struct
 representing a table in a sqlx database.
 
+```rust
+use sqlx::FromRow;
+use sqlx_crud::Crud;
+
+#[derive(Debug, FromRow, Crud)]
+struct User {
+    user_id: i32,
+    name: String,
+}
+
+if let Some(user) = User::by_id(&pool, 42) {
+    println!("Found user user_id=42: {:?}", user);
+}
+```
+
 * Single Derive Macro for Structs
 
 * Methods to Create, Read, Update, and Delete Records
@@ -23,7 +38,7 @@ column, and query metadata. This can help with writing more complex queries
 outside of the single table CRUD paradigm, but it's primary use case is
 for CRUD.
 
-#* Installation
+## Installation
 
 Installing sqlx-crud is similar to installing SQLx.
 
@@ -33,20 +48,6 @@ Installing sqlx-crud is similar to installing SQLx.
 sqlx-crud = { version = "0", features = ["runtime-tokio-rustls"] }
 ```
 
-```rust
-use sqlx::FromRow;
-use sqlx_crud::Crud;
-
-#[derive(Debug, FromRow, Crud)]
-struct User {
-    user_id: i32,
-    name: String,
-}
-
-if let Some(user) = User::by_id(&pool, 42) {
-    println!("Found user user_id=42: {:?}", user);
-}
-```
 
 See the documentation for full usage instructions.
 
