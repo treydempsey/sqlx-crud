@@ -50,11 +50,12 @@ Installing sqlx-crud is similar to installing SQLx.
 sqlx-crud = { version = "0", features = ["runtime-tokio-rustls"] }
 ```
 
-See the documentation for full usage instructions.
+See the [documentation](https://docs.rs/sqlx-crud/latest) for full usage
+instructions.
 
 ## Features
 
-The featurex are the same as SQLx `runtime-*` flags and are required because of
+The features are the same as SQLx `runtime-*` flags and are required because of
 the dependency on SQLx. Hopefully this constraint will be removed in the future.
 
 ## Source code
