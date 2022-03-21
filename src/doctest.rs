@@ -4,8 +4,8 @@ use sqlx_crud_macros::SqlxCrud;
 
 #[derive(Debug, FromRow, SqlxCrud)]
 pub struct User {
-   pub user_id: i32,
-   pub name: String,
+    pub user_id: i32,
+    pub name: String,
 }
 
 pub async fn setup() -> SqlitePool {

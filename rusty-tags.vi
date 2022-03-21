@@ -3,14 +3,19 @@
 Action	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^enum Action {$/;"	g
 AsDynError	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/aserror.rs	/^pub trait AsDynError<'a> {$/;"	t
 Builder	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^pub struct Builder {$/;"	s
+Config	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^struct Config<'a> {$/;"	s
+Config	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^struct Config<'a> {$/;"	s
 Crud	/home/trey/code/sqlx-crud/src/traits.rs	/^pub trait Crud<'e, E>$/;"	t
 CrudFut	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type CrudFut<'e, T> = Pin<Box<dyn Future<Output = Result<T, sqlx::Error>> + 'e>>;$/;"	T
 CrudStream	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type CrudStream<'e, T> =$/;"	T
+DbType	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^enum DbType {$/;"	g
+DbType	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^enum DbType {$/;"	g
 DisplayAsDisplay	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.30/src/display.rs	/^pub trait DisplayAsDisplay {$/;"	t
 Error	/home/trey/code/sqlx-crud/src/error.rs	/^pub enum Error {$/;"	g
 Handle	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^pub struct Handle {$/;"	s
 IDLE	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^const IDLE: usize = 0;$/;"	c
-Id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                type Id = #id_ty;$/;"	T
+Id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            type Id = #id_ty;$/;"	T
+Id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            type Id = #id_ty;$/;"	T
 Id	/home/trey/code/sqlx-crud/src/traits.rs	/^    type Id: Send;$/;"	T
 Inner	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^struct Inner {$/;"	s
 Item	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    type Item = T::Item;$/;"	T
@@ -62,28 +67,33 @@ assert_ready_err	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/toki
 assert_ready_ok	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/macros.rs	/^macro_rules! assert_ready_ok {$/;"	d
 block_on	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/lib.rs	/^pub fn block_on<F: std::future::Future>(future: F) -> F::Output {$/;"	f
 build	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    pub fn build(&mut self) -> Mock {$/;"	f
-build_sql_queries	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sql_queries(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenStream2 {$/;"	f
-build_sqlx_crud_impl	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sqlx_crud_impl($/;"	f
-build_static_model_schema	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_static_model_schema(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenStream2 {$/;"	f
+build_sql_queries	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sql_queries(config: &Config) -> TokenStream2 {$/;"	f
+build_sql_queries	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^fn build_sql_queries(config: &Config) -> TokenStream2 {$/;"	f
+build_sqlx_crud_impl	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {$/;"	f
+build_sqlx_crud_impl	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {$/;"	f
+build_sqlx_db	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn build_sqlx_db(&self) -> TokenStream2 {$/;"	f
+build_static_model_schema	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_static_model_schema(config: &Config) -> TokenStream2 {$/;"	f
+build_static_model_schema	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^fn build_static_model_schema(config: &Config) -> TokenStream2 {$/;"	f
 build_with_handle	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    pub fn build_with_handle(&mut self) -> (Mock, Handle) {$/;"	f
 by_id	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn by_id(pool: E, id: <Self as Schema>::Id) -> CrudFut<'e, Option<Self>> {$/;"	f
 clear	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn clear(&self) {$/;"	f
 clone	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^unsafe fn clone(raw: *const ()) -> RawWaker {$/;"	f
-columns	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn columns() -> &'static [&'static str] {$/;"	f
+columns	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn columns() -> &'static [&'static str] {$/;"	f
+columns	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn columns() -> &'static [&'static str] {$/;"	f
 columns	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn columns() -> &'static [&'static str];$/;"	f
 compat	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.3.21/src/lib.rs	/^pub mod compat {$/;"	m
 conjure_value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub fn conjure_value<T>() -> T {$/;"	f
-crate_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn crate_name() -> TokenStream2 {$/;"	f
 create	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn create(&'e self, pool: E) -> CrudFut<'e, ()> {$/;"	f
-db_type	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn db_type(attrs: &[Attribute]) -> TokenStream2 {$/;"	f
 decode	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/lib.rs	/^pub mod decode {$/;"	m
 default	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn default() -> Self {$/;"	f
 delete	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn delete(self, pool: E) -> CrudFut<'e, ()> {$/;"	f
-delete_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn delete_by_id_sql() -> &'static str {$/;"	f
+delete_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn delete_by_id_sql() -> &'static str {$/;"	f
+delete_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn delete_by_id_sql() -> &'static str {$/;"	f
 delete_by_id_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn delete_by_id_sql() -> &'static str;$/;"	f
 deref	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn deref(&self) -> &T {$/;"	f
 deref_mut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn deref_mut(&mut self) -> &mut T {$/;"	f
 derive	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^pub fn derive(input: TokenStream) -> TokenStream {$/;"	f
+derive	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^pub fn derive(input: TokenStream) -> TokenStream {$/;"	f
 drop	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    fn drop(&mut self) {$/;"	f
 drop_waker	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^unsafe fn drop_waker(raw: *const ()) {$/;"	f
 dupe_value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub fn dupe_value<T>(_t: &T) -> T {$/;"	f
@@ -92,15 +102,21 @@ enter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.
 enter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    pub fn enter<F, R>(&mut self, f: F) -> R$/;"	f
 executor	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.3.21/src/lib.rs	/^pub mod executor {$/;"	m
 fmt	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {$/;"	f
+from	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn from(db_type: &str) -> Self {$/;"	f
+from	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn from(db_type: &str) -> Self {$/;"	f
+from_attributes	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn from_attributes(attrs: &[Attribute]) -> Self {$/;"	f
 from_raw	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^unsafe fn from_raw(raw: *const ()) -> Arc<ThreadWaker> {$/;"	f
-id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn id(&self) -> Self::Id {$/;"	f
+id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn id(&self) -> Self::Id {$/;"	f
+id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn id(&self) -> Self::Id {$/;"	f
 id	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn id(&self) -> Self::Id;$/;"	f
-id_column	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn id_column() -> &'static str {$/;"	f
+id_column	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn id_column() -> &'static str {$/;"	f
+id_column	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn id_column() -> &'static str {$/;"	f
 id_column	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn id_column() -> &'static str;$/;"	f
-id_column_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn id_column_ident(named: &Punctuated<Field, Comma>) -> &Ident {$/;"	f
-insert_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn insert_binds($/;"	f
+insert_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn insert_binds($/;"	f
+insert_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn insert_binds($/;"	f
 insert_binds	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn insert_binds($/;"	f
-insert_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn insert_sql() -> &'static str {$/;"	f
+insert_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn insert_sql() -> &'static str {$/;"	f
+insert_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn insert_sql() -> &'static str {$/;"	f
 insert_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn insert_sql() -> &'static str;$/;"	f
 into_inner	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    pub fn into_inner(self) -> T$/;"	f
 is_task_ctx	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^fn is_task_ctx() -> bool {$/;"	f
@@ -109,12 +125,14 @@ is_woken	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0
 match_borrow	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    fn match_borrow(self) -> Self::Matched {$/;"	f
 maybe_wakeup_reader	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    fn maybe_wakeup_reader(&mut self) {$/;"	f
 migrate	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! migrate {$/;"	d
-model_schema_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn model_schema_ident(ident: &Ident) -> Ident {$/;"	f
 new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    pub fn new(_arg: &U) -> Self {$/;"	f
 new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    pub fn new(t: T, _u: &U) -> (T, Self) {$/;"	f
 new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    fn new(actions: VecDeque<Action>) -> (Inner, Handle) {$/;"	f
 new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    pub fn new() -> Self {$/;"	f
 new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn new() -> Self {$/;"	f
+new	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn new(attrs: &[Attribute]) -> Self {$/;"	f
+new	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn new(attrs: &[Attribute], ident: &'a Ident, named: &'a Punctuated<Field, Comma>) -> Self {$/;"	f
+new	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn new($/;"	f
 paged	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn paged(_pool: E) -> TryCollectFut<'e, Self> {$/;"	f
 poll	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {$/;"	f
 poll	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    pub fn poll(&mut self) -> Poll<T::Output> {$/;"	f
@@ -141,18 +159,23 @@ query_file_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/
 query_scalar	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_scalar ($/;"	d
 query_scalar_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_scalar_unchecked ($/;"	d
 query_unchecked	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! query_unchecked ($/;"	d
+quote_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn quote_ident(&self, ident: &str) -> String {$/;"	f
+quote_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn quote_ident(&self, ident: &str) -> String {$/;"	f
 read	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    fn read(&mut self, dst: &mut ReadBuf<'_>) -> io::Result<()> {$/;"	f
 read	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    pub fn read(&mut self, buf: &[u8]) -> &mut Self {$/;"	f
 read_error	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    pub fn read_error(&mut self, error: io::Error) -> &mut Self {$/;"	f
 remaining_wait	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    fn remaining_wait(&mut self) -> Option<Duration> {$/;"	f
 same_type	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub fn same_type<T>(_1: &T, _2: &T) {}$/;"	f
-select_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn select_by_id_sql() -> &'static str {$/;"	f
+select_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn select_by_id_sql() -> &'static str {$/;"	f
+select_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn select_by_id_sql() -> &'static str {$/;"	f
 select_by_id_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn select_by_id_sql() -> &'static str;$/;"	f
-select_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn select_sql() -> &'static str {$/;"	f
+select_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn select_sql() -> &'static str {$/;"	f
+select_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn select_sql() -> &'static str {$/;"	f
 select_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn select_sql() -> &'static str;$/;"	f
 spawn	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^pub fn spawn<T>(task: T) -> Spawn<T> {$/;"	f
-table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn table_name() -> &'static str {$/;"	f
-table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn table_name(ident: &Ident) -> String {$/;"	f
+sqlx_db	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn sqlx_db(&self) -> TokenStream2 {$/;"	f
+table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn table_name() -> &'static str {$/;"	f
+table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn table_name() -> &'static str {$/;"	f
 table_name	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn table_name() -> &'static str;$/;"	f
 test_dupe_value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^fn test_dupe_value() {$/;"	f
 test_match_borrow	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^fn test_match_borrow() {$/;"	f
@@ -160,9 +183,11 @@ test_wrap_same	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0
 to_raw	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^unsafe fn to_raw(waker: Arc<ThreadWaker>) -> RawWaker {$/;"	f
 types	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/lib.rs	/^pub mod types {$/;"	m
 update	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update(&'e self, pool: E) -> CrudFut<'e, ()> {$/;"	f
-update_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn update_binds($/;"	f
+update_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_binds($/;"	f
+update_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn update_binds($/;"	f
 update_binds	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update_binds($/;"	f
-update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn update_by_id_sql() -> &'static str {$/;"	f
+update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_by_id_sql() -> &'static str {$/;"	f
+update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn update_by_id_sql() -> &'static str {$/;"	f
 update_by_id_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update_by_id_sql() -> &'static str;$/;"	f
 wait	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    pub fn wait(&mut self, duration: Duration) -> &mut Self {$/;"	f
 wake	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn wake(&self) {$/;"	f

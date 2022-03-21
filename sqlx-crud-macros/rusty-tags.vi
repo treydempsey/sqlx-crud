@@ -18,6 +18,8 @@ BoundLifetimes	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.
 Braces	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/group.rs	/^pub struct Braces<'a> {$/;"	s
 Brackets	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/group.rs	/^pub struct Brackets<'a> {$/;"	s
 CamelOptions	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/cases/case/mod.rs	/^pub struct CamelOptions {$/;"	s
+Config	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^struct Config<'a> {$/;"	s
+Config	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^struct Config<'a> {$/;"	s
 ConstParam	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/generics.rs	/^    pub struct ConstParam {$/;"	s
 ConstParams	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/generics.rs	/^pub struct ConstParams<'a>(Iter<'a, GenericParam>);$/;"	s
 ConstParamsMut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/generics.rs	/^pub struct ConstParamsMut<'a>(IterMut<'a, GenericParam>);$/;"	s
@@ -28,6 +30,8 @@ Data	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/d
 DataEnum	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/derive.rs	/^    pub struct DataEnum {$/;"	s
 DataStruct	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/derive.rs	/^    pub struct DataStruct {$/;"	s
 DataUnion	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/derive.rs	/^    pub struct DataUnion {$/;"	s
+DbType	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^enum DbType {$/;"	g
+DbType	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^enum DbType {$/;"	g
 Delimiter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/lib.rs	/^pub enum Delimiter {$/;"	g
 DeriveInput	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/derive.rs	/^    pub struct DeriveInput {$/;"	s
 EMPTY_ENTRY	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/buffer.rs	/^        static EMPTY_ENTRY: UnsafeSyncEntry = UnsafeSyncEntry(Entry::End(0 as *const Entry));$/;"	c
@@ -104,7 +108,8 @@ Group	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0
 Group	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/group.rs	/^pub struct Group<'a> {$/;"	s
 HasIterator	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.15/src/runtime.rs	/^pub struct HasIterator; \/\/ True$/;"	s
 INIT	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/detection.rs	/^static INIT: Once = Once::new();$/;"	c
-Id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                type Id = #id_ty;$/;"	T
+Id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            type Id = #id_ty;$/;"	T
+Id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            type Id = #id_ty;$/;"	T
 Ident	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/lib.rs	/^pub struct Ident {$/;"	s
 Ident	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/ident.rs	/^pub fn Ident(marker: lookahead::TokenMarker) -> Ident {$/;"	f
 IdentAny	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/ext.rs	/^    pub struct IdentAny;$/;"	s
@@ -475,9 +480,13 @@ bool	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/e
 boxes	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/string/pluralize/mod.rs	/^    fn boxes() {$/;"	f
 braced	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/group.rs	/^macro_rules! braced {$/;"	d
 bracketed	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/group.rs	/^macro_rules! bracketed {$/;"	d
-build_sql_queries	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sql_queries(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenStream2 {$/;"	f
-build_sqlx_crud_impl	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sqlx_crud_impl($/;"	f
-build_static_model_schema	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_static_model_schema(ident: &Ident, named: &Punctuated<Field, Comma>) -> TokenStream2 {$/;"	f
+build_sql_queries	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sql_queries(config: &Config) -> TokenStream2 {$/;"	f
+build_sql_queries	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^fn build_sql_queries(config: &Config) -> TokenStream2 {$/;"	f
+build_sqlx_crud_impl	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {$/;"	f
+build_sqlx_crud_impl	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {$/;"	f
+build_sqlx_db	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn build_sqlx_db(&self) -> TokenStream2 {$/;"	f
+build_static_model_schema	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn build_static_model_schema(config: &Config) -> TokenStream2 {$/;"	f
+build_static_model_schema	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^fn build_static_model_schema(config: &Config) -> TokenStream2 {$/;"	f
 bump	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/buffer.rs	/^    unsafe fn bump(self) -> Cursor<'a> {$/;"	f
 byte	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn byte(input: Cursor) -> Result<Cursor, Reject> {$/;"	f
 byte	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/lit.rs	/^    pub fn byte<S: AsRef<[u8]> + ?Sized>(s: &S, idx: usize) -> u8 {$/;"	f
@@ -526,7 +535,8 @@ closure_arg	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.8
 cmp	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/lib.rs	/^    fn cmp(&self, other: &Ident) -> Ordering {$/;"	f
 cmp	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/lib.rs	/^    fn cmp(&self, other: &Self) -> Ordering {$/;"	f
 cmp	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/lifetime.rs	/^    fn cmp(&self, other: &Lifetime) -> Ordering {$/;"	f
-columns	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn columns() -> &'static [&'static str] {$/;"	f
+columns	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn columns() -> &'static [&'static str] {$/;"	f
+columns	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn columns() -> &'static [&'static str] {$/;"	f
 combine	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/error.rs	/^    pub fn combine(&mut self, another: Error) {$/;"	f
 compiler_literal_from_str	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^fn compiler_literal_from_str(repr: &str) -> Result<proc_macro::Literal, LexError> {$/;"	f
 const_argument	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/path.rs	/^    pub fn const_argument(input: ParseStream) -> Result<Expr> {$/;"	f
@@ -535,7 +545,6 @@ const_params_mut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-
 constraint_bounds	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/path.rs	/^    fn constraint_bounds(input: ParseStream) -> Result<Punctuated<TypeParamBound, Token![+]>> {$/;"	f
 cooked_byte_string	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn cooked_byte_string(mut input: Cursor) -> Result<Cursor, Reject> {$/;"	f
 cooked_string	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn cooked_string(input: Cursor) -> Result<Cursor, Reject> {$/;"	f
-crate_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn crate_name() -> TokenStream2 {$/;"	f
 create	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/buffer.rs	/^    unsafe fn create(mut ptr: *const Entry, scope: *const Entry) -> Self {$/;"	f
 cursor	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/parse.rs	/^    pub fn cursor(&self) -> Cursor<'a> {$/;"	f
 custom_keyword	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/custom_keyword.rs	/^macro_rules! custom_keyword {$/;"	d
@@ -546,7 +555,6 @@ custom_punctuation_unexpected	/home/trey/.cargo/registry/src/github.com-1ecc6299
 data_enum	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/derive.rs	/^    pub fn data_enum($/;"	f
 data_struct	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/derive.rs	/^    pub fn data_struct($/;"	f
 data_union	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/derive.rs	/^    pub fn data_union($/;"	f
-db_type	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn db_type(attrs: &[Attribute]) -> TokenStream2 {$/;"	f
 debug_impls	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/lit.rs	/^mod debug_impls {$/;"	m
 deconstantize	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/lib.rs	/^    fn deconstantize(&self) -> String;$/;"	f
 deconstantize	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/string/deconstantize/mod.rs	/^pub fn deconstantize(non_deconstantized_string: &str) -> String {$/;"	f
@@ -569,7 +577,8 @@ define_keywords	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1
 define_number_implementations	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/lib.rs	/^macro_rules! define_number_implementations {$/;"	d
 define_punctuation	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/token.rs	/^macro_rules! define_punctuation {$/;"	d
 define_punctuation_structs	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/token.rs	/^macro_rules! define_punctuation_structs {$/;"	d
-delete_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn delete_by_id_sql() -> &'static str {$/;"	f
+delete_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn delete_by_id_sql() -> &'static str {$/;"	f
+delete_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn delete_by_id_sql() -> &'static str {$/;"	f
 delim	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/token.rs	/^    pub fn delim<F>(s: &str, span: Span, tokens: &mut TokenStream, f: F)$/;"	f
 delimiter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/fallback.rs	/^    pub fn delimiter(&self) -> Delimiter {$/;"	f
 delimiter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/lib.rs	/^    pub fn delimiter(&self) -> Delimiter {$/;"	f
@@ -583,6 +592,7 @@ deref	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/
 deref	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/token.rs	/^            fn deref(&self) -> &Self::Target {$/;"	f
 deref_mut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/token.rs	/^            fn deref_mut(&mut self) -> &mut Self::Target {$/;"	f
 derive	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^pub fn derive(input: TokenStream) -> TokenStream {$/;"	f
+derive	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^pub fn derive(input: TokenStream) -> TokenStream {$/;"	f
 digits	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn digits(mut input: Cursor) -> Result<Cursor, Reject> {$/;"	f
 display	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/custom_keyword.rs	/^            fn display() -> &'static $crate::__private::str {$/;"	f
 display	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/custom_punctuation.rs	/^            fn display() -> &'static $crate::__private::str {$/;"	f
@@ -1115,6 +1125,9 @@ from	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/l
 from	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/macros.rs	/^            fn from(e: $member) -> $name {$/;"	f
 from	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/path.rs	/^    fn from(ident: T) -> Self {$/;"	f
 from	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/path.rs	/^    fn from(segment: T) -> Self {$/;"	f
+from	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn from(db_type: &str) -> Self {$/;"	f
+from	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn from(db_type: &str) -> Self {$/;"	f
+from_attributes	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn from_attributes(attrs: &[Attribute]) -> Self {$/;"	f
 from_camel_case	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/cases/camelcase/mod.rs	/^    fn from_camel_case() {$/;"	f
 from_camel_case	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/cases/classcase/mod.rs	/^    fn from_camel_case() {$/;"	f
 from_camel_case	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/cases/kebabcase/mod.rs	/^    fn from_camel_case() {$/;"	f
@@ -1254,9 +1267,10 @@ hash	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/t
 hash	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/tt.rs	/^    fn hash<H: Hasher>(&self, h: &mut H) {$/;"	f
 hash	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/tt.rs	/^    fn hash<H: Hasher>(&self, state: &mut H) {$/;"	f
 help	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/export.rs	/^mod help {$/;"	m
-id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn id(&self) -> Self::Id {$/;"	f
-id_column	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn id_column() -> &'static str {$/;"	f
-id_column_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn id_column_ident(named: &Punctuated<Field, Comma>) -> &Ident {$/;"	f
+id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn id(&self) -> Self::Id {$/;"	f
+id	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn id(&self) -> Self::Id {$/;"	f
+id_column	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn id_column() -> &'static str {$/;"	f
+id_column	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn id_column() -> &'static str {$/;"	f
 ident	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn ident(input: Cursor) -> PResult<crate::Ident> {$/;"	f
 ident	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/buffer.rs	/^    pub fn ident(mut self) -> Option<(Ident, Cursor<'a>)> {$/;"	f
 ident_any	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn ident_any(input: Cursor) -> PResult<crate::Ident> {$/;"	f
@@ -1289,8 +1303,10 @@ inner_attrs_to_tokens	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823
 inner_new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/buffer.rs	/^    fn inner_new(stream: TokenStream, up: *const Entry) -> TokenBuffer {$/;"	f
 inner_unexpected	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/parse.rs	/^fn inner_unexpected(buffer: &ParseBuffer) -> (Rc<Cell<Unexpected>>, Option<Span>) {$/;"	f
 insert	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/punctuated.rs	/^    pub fn insert(&mut self, index: usize, value: T)$/;"	f
-insert_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn insert_binds($/;"	f
-insert_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn insert_sql() -> &'static str {$/;"	f
+insert_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn insert_binds($/;"	f
+insert_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn insert_binds($/;"	f
+insert_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn insert_sql() -> &'static str {$/;"	f
+insert_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn insert_sql() -> &'static str {$/;"	f
 int	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn int(input: Cursor) -> Result<Cursor, Reject> {$/;"	f
 into_compile_error	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/error.rs	/^    pub fn into_compile_error(self) -> TokenStream {$/;"	f
 into_compiler_token	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^fn into_compiler_token(token: TokenTree) -> proc_macro::TokenTree {$/;"	f
@@ -1493,7 +1509,6 @@ mixed_site	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro
 mixed_site	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/lib.rs	/^    pub fn mixed_site() -> Self {$/;"	f
 mixed_site	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^    pub fn mixed_site() -> Self {$/;"	f
 mk_ident	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.15/src/runtime.rs	/^pub fn mk_ident(id: &str, span: Option<Span>) -> Ident {$/;"	f
-model_schema_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn model_schema_ident(ident: &Ident) -> Ident {$/;"	f
 mul_assign	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/bigint.rs	/^    fn mul_assign(&mut self, base: u8) {$/;"	f
 multi_index	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/expr.rs	/^    fn multi_index(e: &mut Expr, dot_token: &mut Token![.], float: LitFloat) -> Result<bool> {$/;"	f
 multi_pat	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/pat.rs	/^    pub fn multi_pat(input: ParseStream) -> Result<Pat> {$/;"	f
@@ -1526,6 +1541,9 @@ new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/lo
 new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/punctuated.rs	/^    pub fn new() -> Self {$/;"	f
 new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/punctuated.rs	/^    pub fn new(t: T, p: Option<P>) -> Self {$/;"	f
 new	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/thread.rs	/^    pub fn new(value: T) -> Self {$/;"	f
+new	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn new(attrs: &[Attribute]) -> Self {$/;"	f
+new	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn new(attrs: &[Attribute], ident: &'a Ident, named: &'a Punctuated<Field, Comma>) -> Self {$/;"	f
+new	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn new($/;"	f
 new2	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/buffer.rs	/^    pub fn new2(stream: TokenStream) -> Self {$/;"	f
 new2	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/error.rs	/^pub fn new2<T: Display>(start: Span, end: Span, message: T) -> Error {$/;"	f
 new_at	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/error.rs	/^pub fn new_at<T: Display>(scope: Span, cursor: Cursor, message: T) -> Error {$/;"	f
@@ -1783,6 +1801,8 @@ quote_bind_into_iter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/
 quote_bind_next_or_break	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.15/src/lib.rs	/^macro_rules! quote_bind_next_or_break {$/;"	d
 quote_each_token	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.15/src/lib.rs	/^macro_rules! quote_each_token {$/;"	d
 quote_each_token_spanned	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.15/src/lib.rs	/^macro_rules! quote_each_token_spanned {$/;"	d
+quote_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn quote_ident(&self, ident: &str) -> String {$/;"	f
+quote_ident	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^    fn quote_ident(&self, ident: &str) -> String {$/;"	f
 quote_into_iter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.15/src/runtime.rs	/^        fn quote_into_iter(&'q self) -> (Self::Iter, HasIter) {$/;"	f
 quote_into_iter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.15/src/runtime.rs	/^        fn quote_into_iter(&'q self) -> (Self::Iter, HasIter);$/;"	f
 quote_into_iter	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.15/src/runtime.rs	/^        fn quote_into_iter(&self) -> (&Self, DoesNotHaveIter) {$/;"	f
@@ -1823,8 +1843,10 @@ rules	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.
 rustdoc_workaround	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/lib.rs	/^mod rustdoc_workaround {$/;"	m
 safe_convert	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/suffix/foreignkey/mod.rs	/^fn safe_convert(safe_string: &str) -> String {$/;"	f
 second_last_number_is_one	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/numbers/ordinalize/mod.rs	/^fn second_last_number_is_one(chars: Vec<char>) -> bool {$/;"	f
-select_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn select_by_id_sql() -> &'static str {$/;"	f
-select_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn select_sql() -> &'static str {$/;"	f
+select_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn select_by_id_sql() -> &'static str {$/;"	f
+select_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn select_by_id_sql() -> &'static str {$/;"	f
+select_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn select_sql() -> &'static str {$/;"	f
+select_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn select_sql() -> &'static str {$/;"	f
 set_span	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/fallback.rs	/^    pub fn set_span(&mut self, span: Span) {$/;"	f
 set_span	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/lib.rs	/^    pub fn set_span(&mut self, span: Span) {$/;"	f
 set_span	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^    pub fn set_span(&mut self, span: Span) {$/;"	f
@@ -1878,6 +1900,7 @@ span_within	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macr
 special_cases	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/string/pluralize/mod.rs	/^macro_rules! special_cases{$/;"	d
 special_cases	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/string/singularize/mod.rs	/^macro_rules! special_cases{$/;"	d
 split_for_impl	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/generics.rs	/^    pub fn split_for_impl(&self) -> (ImplGenerics, TypeGenerics, Option<&WhereClause>) {$/;"	f
+sqlx_db	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^    fn sqlx_db(&self) -> TokenStream2 {$/;"	f
 start	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/fallback.rs	/^    pub fn start(&self) -> LineColumn {$/;"	f
 start	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/lib.rs	/^    pub fn start(&self) -> LineColumn {$/;"	f
 start	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^    pub fn start(&self) -> LineColumn {$/;"	f
@@ -1906,8 +1929,8 @@ suffixed_int_literals	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823
 suffixed_numbers	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/fallback.rs	/^macro_rules! suffixed_numbers {$/;"	d
 suffixed_numbers	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^macro_rules! suffixed_numbers {$/;"	d
 surround	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/token.rs	/^                pub fn surround<F>(&self, tokens: &mut TokenStream, f: F)$/;"	f
-table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn table_name() -> &'static str {$/;"	f
-table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^fn table_name(ident: &Ident) -> String {$/;"	f
+table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn table_name() -> &'static str {$/;"	f
+table_name	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn table_name() -> &'static str {$/;"	f
 take_inner	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/fallback.rs	/^    fn take_inner(&mut self) -> Vec<TokenTree> {$/;"	f
 take_until_newline_or_eof	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/parse.rs	/^fn take_until_newline_or_eof(input: Cursor) -> (Cursor, &str) {$/;"	f
 test_char_is_seperator_dash	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/cases/case/mod.rs	/^fn test_char_is_seperator_dash() {$/;"	f
@@ -2044,8 +2067,10 @@ unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-m
 unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^    fn unwrap_nightly(self) -> proc_macro::Span {$/;"	f
 unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^    fn unwrap_nightly(self) -> proc_macro::TokenStream {$/;"	f
 unwrap_stable	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/wrapper.rs	/^    fn unwrap_stable(self) -> fallback::TokenStream {$/;"	f
-update_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn update_binds($/;"	f
-update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^                fn update_by_id_sql() -> &'static str {$/;"	f
+update_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_binds($/;"	f
+update_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn update_binds($/;"	f
+update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_by_id_sql() -> &'static str {$/;"	f
+update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib_bak.rs	/^            fn update_by_id_sql() -> &'static str {$/;"	f
 validate_ident	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/fallback.rs	/^fn validate_ident(string: &str) {$/;"	f
 value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.36/src/marker.rs	/^mod value {$/;"	m
 value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/lit.rs	/^    pub fn value(&self) -> String {$/;"	f

@@ -4,9 +4,9 @@
 - [x] Add documentation
 - [x] Add working doctest examples
 - [x] Add readme, license and other support files
-- [ ] Package and release to crates.io
-- [ ] Allow database assigned primary keys
-- [ ] Crud::create() should return the assigned ID
+- [x] Package and release to crates.io
+- [x] Allow database assigned primary keys
+- [x] Crud::create() should return the assigned ID
 - [ ] Add a field attribute to ignore fields
 - [ ] Remove SQLx feature flag duplication
 - [ ] Remove doctest feature flag workaround

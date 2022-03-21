@@ -49,7 +49,7 @@ pub trait Schema {
     ///
     /// ```rust
     /// use sqlx::FromRow;
-    /// use sqlx_crud::SqlxCrud;
+    /// use sqlx_crud::{Schema, SqlxCrud};
     ///
     /// #[derive(FromRow, SqlxCrud)]
     /// struct GoogleIdToken {
@@ -80,7 +80,7 @@ pub trait Schema {
     /// # use sqlx_crud::doctest::User;
     /// use sqlx_crud::Schema;
     ///
-    /// assert_eq!("SELECT user_id, name FROM users", User::select_sql());
+    /// assert_eq!(r#"SELECT "users"."user_id", "users"."name" FROM "users""#, User::select_sql());
     /// ```
     fn select_sql() -> &'static str;
 
@@ -94,22 +94,33 @@ pub trait Schema {
     /// use sqlx_crud::Schema;
     ///
     /// assert_eq!(
-    ///     "SELECT user_id, name FROM users WHERE user_id = ? LIMIT 1",
+    ///     r#"SELECT "users"."user_id", "users"."name" FROM "users" WHERE "users"."user_id" = ? LIMIT 1"#,
     ///     User::select_by_id_sql()
     /// );
     /// ```
     fn select_by_id_sql() -> &'static str;
 
-    /// Returns the SQL for inserting a new record in to the database. It does not
-    /// handle database assigned IDs.
+    /// Returns the SQL for inserting a new record in to the database. The
+    /// `#[external_id]` attribute may be used to specify IDs are assigned
+    /// outside of the database.
+    ///
     ///
     /// # Example
     ///
     /// ```rust
     /// # use sqlx_crud::doctest::User;
-    /// use sqlx_crud::Schema;
+    /// use sqlx::FromRow;
+    /// use sqlx_crud::{Schema, SqlxCrud};
     ///
-    /// assert_eq!("INSERT INTO users VALUES (?, ?)", User::insert_sql());
+    /// #[derive(Debug, FromRow, SqlxCrud)]
+    /// #[external_id]
+    /// pub struct UserExternalId {
+    ///     pub user_id: i32,
+    ///     pub name: String,
+    /// }
+    ///
+    /// assert_eq!(r#"INSERT INTO "users" ("name") VALUES (?) RETURNING "users"."user_id", "users"."name""#, User::insert_sql());
+    /// assert_eq!(r#"INSERT INTO "user_external_ids" ("user_id", "name") VALUES (?, ?) RETURNING "user_external_ids"."user_id", "user_external_ids"."name""#, UserExternalId::insert_sql());
     /// ```
     fn insert_sql() -> &'static str;
 
@@ -121,7 +132,7 @@ pub trait Schema {
     /// # use sqlx_crud::doctest::User;
     /// use sqlx_crud::Schema;
     ///
-    /// assert_eq!("UPDATE users SET name = ? WHERE user_id = ?", User::update_by_id_sql());
+    /// assert_eq!(r#"UPDATE "users" SET "name" = ? WHERE "users"."user_id" = ? RETURNING "users"."user_id", "users"."name""#, User::update_by_id_sql());
     /// ```
     fn update_by_id_sql() -> &'static str;
 
@@ -133,7 +144,7 @@ pub trait Schema {
     /// # use sqlx_crud::doctest::User;
     /// use sqlx_crud::Schema;
     ///
-    /// assert_eq!("DELETE FROM users WHERE user_id = ?", User::delete_by_id_sql());
+    /// assert_eq!(r#"DELETE FROM "users" WHERE "users"."user_id" = ?"#, User::delete_by_id_sql());
     /// ```
     fn delete_by_id_sql() -> &'static str;
 }
@@ -149,12 +160,7 @@ pub trait Schema {
 /// [SqlxCrud]: ../derive.SqlxCrud.html
 pub trait Crud<'e, E>
 where
-    Self: 'e
-        + Sized
-        + Send
-        + Unpin
-        + for<'r> FromRow<'r, <E::Database as Database>::Row>
-        + Schema,
+    Self: 'e + Sized + Send + Unpin + for<'r> FromRow<'r, <E::Database as Database>::Row> + Schema,
     <Self as Schema>::Id:
         Encode<'e, <E as Executor<'e>>::Database> + Type<<E as Executor<'e>>::Database>,
     E: Executor<'e> + 'e,
@@ -269,7 +275,7 @@ where
     /// # Ok::<(), sqlx::Error>(())
     /// # });
     /// ```
-    /// 
+    ///
     /// [try_collect]: https://docs.rs/futures/latest/futures/stream/trait.TryStreamExt.html#method.try_collect
     fn all(pool: E) -> TryCollectFut<'e, Self> {
         let stream =
@@ -303,7 +309,7 @@ where
         Box::pin(
             sqlx::query_as::<E::Database, Self>(<Self as Schema>::select_by_id_sql())
                 .bind(id)
-                .fetch_optional(pool)
+                .fetch_optional(pool),
         )
     }
 
@@ -357,10 +363,6 @@ where
     /// ```
     fn delete(self, pool: E) -> CrudFut<'e, ()> {
         let query = sqlx::query(<Self as Schema>::delete_by_id_sql()).bind(self.id());
-        Box::pin(
-            query
-                .execute(pool)
-                .and_then(|_| future::ok(())),
-        )
+        Box::pin(query.execute(pool).and_then(|_| future::ok(())))
     }
 }

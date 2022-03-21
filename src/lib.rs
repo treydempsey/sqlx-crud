@@ -32,7 +32,7 @@
 //! Because sqlx-crud depends on sqlx you need to use the same executor and TLS
 //! feature pair as you did with sqlx. If for example you used `tokio-rustls`
 //! with sqlx you should also use the same feature with sqlx-crud.
-//! 
+//!
 //! Hopefully I can figure out a way to remove this requirement. I think
 //! I might need to use a build.rs script and interrogate the sqlx features that way.
 //!
@@ -46,7 +46,7 @@
 //!     username TEXT NOT NULL
 //! );
 //! ```
-//! 
+//!
 //! To define a `User` struct with generated [Crud] methods:
 //!
 //! ```rust
@@ -140,7 +140,7 @@
 //! # use futures::stream::TryStreamExt;
 //! # use sqlx::SqlitePool;
 //! # use sqlx::FromRow;
-//! # use sqlx_crud_macros::SqlxCrud;
+//! use sqlx_crud::{Schema, SqlxCrud};
 //!
 //! #[derive(Debug, FromRow, SqlxCrud)]
 //! pub struct User {
@@ -154,16 +154,16 @@
 //!             "{} ORDER BY users.id ASC LIMIT ?",
 //!             <Self as Schema>::select_sql()
 //!         );
-//! 
+//!
 //!         let mut users = Vec::new();
 //!         let mut stream = sqlx::query_as::<_, Self>(&query)
 //!             .bind(limit)
 //!             .fetch(pool);
-//! 
+//!
 //!         while let Some(user) = stream.try_next().await? {
 //!             users.push(user);
 //!         }
-//! 
+//!
 //!         Ok(users)
 //!     }
 //! }
