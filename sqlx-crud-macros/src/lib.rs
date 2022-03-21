@@ -198,16 +198,16 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
         impl<'e> #crate_name::traits::Crud<'e, &'e ::sqlx::pool::Pool<#db_ty>> for #ident {
             fn insert_binds(
                 &'e self,
-                query: ::sqlx::query::Query<'e, ::sqlx::Sqlite, ::sqlx::sqlite::SqliteArguments<'e>>
-            ) -> ::sqlx::query::Query<'e, ::sqlx::Sqlite, ::sqlx::sqlite::SqliteArguments<'e>> {
+                query: ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments>
+            ) -> ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments> {
                 query
                     #(#insert_binds)*
             }
 
             fn update_binds(
                 &'e self,
-                query: ::sqlx::query::Query<'e, ::sqlx::Sqlite, ::sqlx::sqlite::SqliteArguments<'e>>
-            ) -> ::sqlx::query::Query<'e, ::sqlx::Sqlite, ::sqlx::sqlite::SqliteArguments<'e>> {
+                query: ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments>
+            ) -> ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments> {
                 query
                     #(#update_binds)*
                     .bind(&self.#id_column_ident)

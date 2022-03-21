@@ -5,7 +5,7 @@ use futures::stream::TryCollect;
 use futures::Future;
 use futures::{future, TryFutureExt, TryStreamExt};
 use sqlx::database::HasArguments;
-use sqlx::query::Query;
+use sqlx::query::QueryAs;
 use sqlx::{Database, Encode, Executor, FromRow, IntoArguments, Type};
 
 /// Type alias for methods returning a single element. The future resolves to and
@@ -182,9 +182,10 @@ where
     /// use sqlx_crud::{Crud, Schema};
     ///
     /// let user = User { user_id: 1, name: "Test".to_string() };
-    /// let query = sqlx::query(User::insert_sql());
+    /// let query = sqlx::query_as::<_, User>(User::insert_sql());
     /// let query = user.insert_binds(query);
-    /// query.execute(&pool).await?;
+    /// let user = query.fetch_one(&pool).await?;
+    /// assert_eq!("Test", user.name);
     ///
     /// # Ok::<(), sqlx::Error>(())
     /// # });
@@ -195,8 +196,8 @@ where
     /// [SqlxCrud]: ../derive.SqlxCrud.html
     fn insert_binds(
         &'e self,
-        query: Query<'e, E::Database, <E::Database as HasArguments<'e>>::Arguments>,
-    ) -> Query<'e, E::Database, <E::Database as HasArguments<'e>>::Arguments>;
+        query: QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>,
+    ) -> QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>;
 
     /// Given a query returns a new query with parameters suitable for an
     /// UPDATE bound to it. The [SqlxCrud] implementation will bind every
@@ -214,10 +215,11 @@ where
     /// # let pool = setup().await;
     /// use sqlx_crud::{Crud, Schema};
     ///
-    /// let user = User { user_id: 1, name: "Test".to_string() };
-    /// let query = sqlx::query(User::update_by_id_sql());
+    /// let user = User { user_id: 1, name: "other".to_string() };
+    /// let query = sqlx::query_as::<_, User>(User::update_by_id_sql());
     /// let query = user.update_binds(query);
-    /// query.execute(&pool).await?;
+    /// let user = query.fetch_one(&pool).await?;
+    /// assert_eq!("other", user.name);
     ///
     /// # Ok::<(), sqlx::Error>(())
     /// # });
@@ -228,8 +230,8 @@ where
     /// [SqlxCrud]: ../derive.SqlxCrud.html
     fn update_binds(
         &'e self,
-        query: Query<'e, E::Database, <E::Database as HasArguments<'e>>::Arguments>,
-    ) -> Query<'e, E::Database, <E::Database as HasArguments<'e>>::Arguments>;
+        query: QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>,
+    ) -> QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>;
 
     /// Returns a future that resolves to an insert or `sqlx::Error` of the
     /// current instance.
@@ -243,18 +245,19 @@ where
     /// use sqlx_crud::{Crud, Schema};
     ///
     /// let user = User { user_id: 1, name: "test".to_string() };
-    /// user.create(&pool).await?;
+    /// let user = user.create(&pool).await?;
+    /// assert_eq!("test", user.name);
     ///
     /// # Ok::<(), sqlx::Error>(())
     /// # });
     /// ```
-    fn create(&'e self, pool: E) -> CrudFut<'e, ()> {
+    fn create(&'e self, pool: E) -> CrudFut<'e, Self> {
         Box::pin(async move {
-            let query = sqlx::query(<Self as Schema>::insert_sql());
+            let query = sqlx::query_as::<E::Database, Self>(<Self as Schema>::insert_sql());
             let query = self.insert_binds(query);
-            query.execute(pool).await?;
+            let r = query.fetch_one(pool).await?;
 
-            Ok(())
+            Ok(r)
         })
     }
 
@@ -326,19 +329,20 @@ where
     ///
     /// if let Some(mut user) = User::by_id(&pool, 1).await? {
     ///     user.name = "Harry".to_string();
-    ///     user.update(&pool).await?;
+    ///     let user = user.update(&pool).await?;
+    ///     assert_eq!("Harry", user.name);
     /// }
     ///
     /// # Ok::<(), sqlx::Error>(())
     /// # });
     /// ```
-    fn update(&'e self, pool: E) -> CrudFut<'e, ()> {
+    fn update(&'e self, pool: E) -> CrudFut<'e, Self> {
         Box::pin(async move {
-            let query = sqlx::query(<Self as Schema>::update_by_id_sql());
+            let query = sqlx::query_as::<E::Database, Self>(<Self as Schema>::update_by_id_sql());
             let query = self.update_binds(query);
-            query.execute(pool).await?;
+            let r = query.fetch_one(pool).await?;
 
-            Ok(())
+            Ok(r)
         })
     }
 

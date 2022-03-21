@@ -183,10 +183,8 @@
 #[cfg(feature = "doctest")]
 pub mod doctest;
 
-pub mod error;
 pub mod schema;
 pub mod traits;
 
-pub use error::Error;
 pub use sqlx_crud_macros::SqlxCrud;
 pub use traits::{Crud, Schema};
