@@ -26,10 +26,6 @@ runtime-actix-rustls = ["sqlx/runtime-actix-rustls"]
 runtime-async-std-rustls = ["sqlx/runtime-async-std-rustls"]
 runtime-tokio-rustls = ["sqlx/runtime-tokio-rustls"]
 
-# The reason we do this is because doctests don't get cfg(test)/cfg(doctest)
-# See: https://github.com/rust-lang/cargo/issues/4669
-doctest = []
-
 [dependencies]
 futures = "0"
 sqlx = { version = "0" }
