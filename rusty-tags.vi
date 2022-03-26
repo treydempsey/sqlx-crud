@@ -36,7 +36,7 @@ Spawn	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.
 Target	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    type Target = T;$/;"	T
 ThreadWaker	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^struct ThreadWaker {$/;"	s
 TryCollectFut	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type TryCollectFut<'e, T> = TryCollect<CrudStream<'e, T>, Vec<T>>;$/;"	T
-User	/home/trey/code/sqlx-crud/src/doctest.rs	/^pub struct User {$/;"	s
+User	/home/trey/code/sqlx-crud/src/lib.rs	/^        pub struct User {$/;"	s
 VTABLE	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^static VTABLE: RawWakerVTable = RawWakerVTable::new(clone, wake, wake_by_ref, drop_waker);$/;"	c
 WAKE	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^const WAKE: usize = 1;$/;"	c
 WrapSame	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub struct WrapSame<T, U>(PhantomData<T>, PhantomData<U>);$/;"	s
@@ -83,6 +83,7 @@ delete_by_id_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn delete_by_id_s
 deref	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn deref(&self) -> &T {$/;"	f
 deref_mut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn deref_mut(&mut self) -> &mut T {$/;"	f
 derive	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^pub fn derive(input: TokenStream) -> TokenStream {$/;"	f
+doctest_setup	/home/trey/code/sqlx-crud/src/lib.rs	/^macro_rules! doctest_setup {$/;"	d
 drop	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    fn drop(&mut self) {$/;"	f
 drop_waker	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^unsafe fn drop_waker(raw: *const ()) {$/;"	f
 dupe_value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^pub fn dupe_value<T>(_t: &T) -> T {$/;"	f
@@ -105,6 +106,7 @@ into_inner	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test
 is_task_ctx	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^fn is_task_ctx() -> bool {$/;"	f
 is_woken	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    fn is_woken(&self) -> bool {$/;"	f
 is_woken	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/task.rs	/^    pub fn is_woken(&self) -> bool {$/;"	f
+main	/home/trey/code/sqlx-crud/src/lib.rs	/^        fn main() -> Result<(), sqlx::Error> {$/;"	f
 match_borrow	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/ty_match.rs	/^    fn match_borrow(self) -> Self::Matched {$/;"	f
 maybe_wakeup_reader	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-test-0.4.2/src/io.rs	/^    fn maybe_wakeup_reader(&mut self) {$/;"	f
 migrate	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.5.11/src/macros.rs	/^macro_rules! migrate {$/;"	d

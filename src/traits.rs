@@ -77,10 +77,11 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Schema;
     ///
     /// assert_eq!(r#"SELECT "users"."user_id", "users"."name" FROM "users""#, User::select_sql());
+    /// # }}
     /// ```
     fn select_sql() -> &'static str;
 
@@ -90,13 +91,14 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Schema;
     ///
     /// assert_eq!(
     ///     r#"SELECT "users"."user_id", "users"."name" FROM "users" WHERE "users"."user_id" = ? LIMIT 1"#,
     ///     User::select_by_id_sql()
     /// );
+    /// # }}
     /// ```
     fn select_by_id_sql() -> &'static str;
 
@@ -108,7 +110,7 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx::FromRow;
     /// use sqlx_crud::{Schema, SqlxCrud};
     ///
@@ -121,6 +123,7 @@ pub trait Schema {
     ///
     /// assert_eq!(r#"INSERT INTO "users" ("name") VALUES (?) RETURNING "users"."user_id", "users"."name""#, User::insert_sql());
     /// assert_eq!(r#"INSERT INTO "user_external_ids" ("user_id", "name") VALUES (?, ?) RETURNING "user_external_ids"."user_id", "user_external_ids"."name""#, UserExternalId::insert_sql());
+    /// # }}
     /// ```
     fn insert_sql() -> &'static str;
 
@@ -129,10 +132,11 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Schema;
     ///
     /// assert_eq!(r#"UPDATE "users" SET "name" = ? WHERE "users"."user_id" = ? RETURNING "users"."user_id", "users"."name""#, User::update_by_id_sql());
+    /// # }}
     /// ```
     fn update_by_id_sql() -> &'static str;
 
@@ -141,10 +145,11 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Schema;
     ///
     /// assert_eq!(r#"DELETE FROM "users" WHERE "users"."user_id" = ?"#, User::delete_by_id_sql());
+    /// # }}
     /// ```
     fn delete_by_id_sql() -> &'static str;
 }
@@ -176,9 +181,7 @@ where
     /// wanted to modify the query you could use something like:
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::{Crud, Schema};
     ///
     /// let user = User { user_id: 1, name: "Test".to_string() };
@@ -187,8 +190,7 @@ where
     /// let user = query.fetch_one(&pool).await?;
     /// assert_eq!("Test", user.name);
     ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     ///
     /// This would bind `user_id`, `name` to the query in that order.
@@ -210,9 +212,7 @@ where
     /// wanted to modify the query you could use something like:
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::{Crud, Schema};
     ///
     /// let user = User { user_id: 1, name: "other".to_string() };
@@ -221,8 +221,7 @@ where
     /// let user = query.fetch_one(&pool).await?;
     /// assert_eq!("other", user.name);
     ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     ///
     /// This would bind `name`, `user_id` to the query in that order.
@@ -239,17 +238,13 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::{Crud, Schema};
     ///
     /// let user = User { user_id: 1, name: "test".to_string() };
     /// let user = user.create(&pool).await?;
     /// assert_eq!("test", user.name);
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     fn create(&'e self, pool: E) -> CrudFut<'e, Self> {
         Box::pin(async move {
@@ -268,15 +263,11 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Crud;
     ///
     /// let all_users: Vec<User> = User::all(&pool).await?;
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     ///
     /// [try_collect]: https://docs.rs/futures/latest/futures/stream/trait.TryStreamExt.html#method.try_collect
@@ -298,15 +289,12 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Crud;
     ///
     /// let user: Option<User> = User::by_id(&pool, 1).await?;
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// assert!(user.is_some());
+    /// # }}
     /// ```
     fn by_id(pool: E, id: <Self as Schema>::Id) -> CrudFut<'e, Option<Self>> {
         Box::pin(
@@ -322,9 +310,7 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Crud;
     ///
     /// if let Some(mut user) = User::by_id(&pool, 1).await? {
@@ -332,9 +318,7 @@ where
     ///     let user = user.update(&pool).await?;
     ///     assert_eq!("Harry", user.name);
     /// }
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     fn update(&'e self, pool: E) -> CrudFut<'e, Self> {
         Box::pin(async move {
@@ -352,18 +336,14 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Crud;
     ///
     /// if let Some(user) = User::by_id(&pool, 1).await? {
     ///     user.delete(&pool).await?;
     /// }
     /// assert!(User::by_id(&pool, 1).await?.is_none());
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     fn delete(self, pool: E) -> CrudFut<'e, ()> {
         let query = sqlx::query(<Self as Schema>::delete_by_id_sql()).bind(self.id());

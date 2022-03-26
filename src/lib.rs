@@ -65,81 +65,56 @@
 //! To create a new `User` in the database:
 //!
 //! ```rust
-//! # use sqlx_crud::doctest::setup;
-//! # use sqlx_crud::doctest::User;
+//! # sqlx_crud::doctest_setup! { |pool| {
 //! use sqlx_crud::Crud;
-//!
-//! # tokio_test::block_on(async {
-//! # let pool = setup().await;
 //!
 //! let new_user = User { user_id: 2, name: "new_user".to_string() };
 //! new_user.create(&pool).await?;
-//!
-//! # Ok::<(), sqlx::Error>(())
-//! # });
+//! # }}
 //! ```
 //!
 //! To query for a `User` where `user_id = 1`:
 //!
 //! ```rust
-//! # use sqlx_crud::doctest::setup;
-//! # use sqlx_crud::doctest::User;
+//! # sqlx_crud::doctest_setup! { |pool| {
 //! use sqlx_crud::Crud;
-//!
-//! # tokio_test::block_on(async {
-//! # let pool = setup().await;
 //!
 //! if let Some(user) = User::by_id(&pool, 1).await? {
 //!     println!("User: {:?}", user);
 //! }
-//!
-//! # Ok::<(), sqlx::Error>(())
-//! # });
+//! # }}
 //! ```
 //!
 //!  To update an existing record:
 //!
 //!  ```rust
-//! # use sqlx_crud::doctest::setup;
-//! # use sqlx_crud::doctest::User;
+//! # sqlx_crud::doctest_setup! { |pool| {
 //! use sqlx_crud::Crud;
-//!
-//! # tokio_test::block_on(async {
-//! # let pool = setup().await;
 //!
 //! if let Some(mut user) = User::by_id(&pool, 1).await? {
 //!     user.name = "something else".to_string();
 //!     user.update(&pool).await?;
 //! }
-//!
-//! # Ok::<(), sqlx::Error>(())
-//! # });
+//! # }}
 //!  ```
 //!
 //! To delete a record:
 //!
 //! ```rust
-//! # use sqlx_crud::doctest::setup;
-//! # use sqlx_crud::doctest::User;
+//! # sqlx_crud::doctest_setup! { |pool| {
 //! use sqlx_crud::Crud;
-//!
-//! # tokio_test::block_on(async {
-//! # let pool = setup().await;
 //!
 //! if let Some(mut user) = User::by_id(&pool, 1).await? {
 //!     user.delete(&pool).await?;
 //! }
-//!
-//! # Ok::<(), sqlx::Error>(())
-//! # });
+//! # }}
 //! ```
 //!
 //! Reusing and modifying the [select_sql] query string:
 //!
 //! ```rust
-//! # use futures::stream::TryStreamExt;
-//! # use sqlx::SqlitePool;
-//! # use sqlx::FromRow;
+//! # sqlx_crud::doctest_setup! { |pool| {
+//! use futures::stream::TryStreamExt;
 //! use sqlx_crud::{Schema, SqlxCrud};
 //!
 //! #[derive(Debug, FromRow, SqlxCrud)]
@@ -167,9 +142,8 @@
 //!         Ok(users)
 //!     }
 //! }
+//! # }}
 //! ```
-//!
-//! [select_sql]: traits/trait.Schema.html#tymethod.select_sql
 //!
 //! # Planned Future Improvements
 //!
@@ -180,11 +154,44 @@
 //! * Crud::create() should return the assigned ID
 //! * Add a field attribute to ignore fields
 
-#[cfg(feature = "doctest")]
-pub mod doctest;
-
 pub mod schema;
 pub mod traits;
 
 pub use sqlx_crud_macros::SqlxCrud;
 pub use traits::{Crud, Schema};
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! doctest_setup {
+    (|$pool:ident| $($t:tt)*) => {
+        use sqlx::FromRow;
+        use sqlx::SqlitePool;
+        use sqlx_crud::SqlxCrud;
+
+        #[derive(Debug, FromRow, SqlxCrud)]
+        pub struct User {
+            pub user_id: i32,
+            pub name: String,
+        }
+
+        fn main() -> Result<(), sqlx::Error> {
+            tokio_test::block_on(async {
+                let $pool = SqlitePool::connect(":memory:")
+                    .await?;
+                sqlx::query("CREATE TABLE users (user_id INTEGER NOT NULL, name TEXT NOT NULL)")
+                    .execute(&$pool)
+                    .await?;
+                sqlx::query("INSERT INTO users (user_id, name) VALUES(?, ?)")
+                    .bind::<i32>(1)
+                    .bind("test")
+                    .execute(&$pool)
+                    .await?;
+
+                $($t)*;
+
+                Ok::<(), sqlx::Error>(())
+            });
+            Ok::<(), sqlx::Error>(())
+        }
+    }
+}
