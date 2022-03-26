@@ -5,7 +5,7 @@ use futures::stream::TryCollect;
 use futures::Future;
 use futures::{future, TryFutureExt, TryStreamExt};
 use sqlx::database::HasArguments;
-use sqlx::query::Query;
+use sqlx::query::QueryAs;
 use sqlx::{Database, Encode, Executor, FromRow, IntoArguments, Type};
 
 /// Type alias for methods returning a single element. The future resolves to and
@@ -49,7 +49,7 @@ pub trait Schema {
     ///
     /// ```rust
     /// use sqlx::FromRow;
-    /// use sqlx_crud::SqlxCrud;
+    /// use sqlx_crud::{Schema, SqlxCrud};
     ///
     /// #[derive(FromRow, SqlxCrud)]
     /// struct GoogleIdToken {
@@ -77,10 +77,11 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Schema;
     ///
-    /// assert_eq!("SELECT user_id, name FROM users", User::select_sql());
+    /// assert_eq!(r#"SELECT "users"."user_id", "users"."name" FROM "users""#, User::select_sql());
+    /// # }}
     /// ```
     fn select_sql() -> &'static str;
 
@@ -90,26 +91,39 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Schema;
     ///
     /// assert_eq!(
-    ///     "SELECT user_id, name FROM users WHERE user_id = ? LIMIT 1",
+    ///     r#"SELECT "users"."user_id", "users"."name" FROM "users" WHERE "users"."user_id" = ? LIMIT 1"#,
     ///     User::select_by_id_sql()
     /// );
+    /// # }}
     /// ```
     fn select_by_id_sql() -> &'static str;
 
-    /// Returns the SQL for inserting a new record in to the database. It does not
-    /// handle database assigned IDs.
+    /// Returns the SQL for inserting a new record in to the database. The
+    /// `#[external_id]` attribute may be used to specify IDs are assigned
+    /// outside of the database.
+    ///
     ///
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
-    /// use sqlx_crud::Schema;
+    /// # sqlx_crud::doctest_setup! { |pool| {
+    /// use sqlx::FromRow;
+    /// use sqlx_crud::{Schema, SqlxCrud};
     ///
-    /// assert_eq!("INSERT INTO users VALUES (?, ?)", User::insert_sql());
+    /// #[derive(Debug, FromRow, SqlxCrud)]
+    /// #[external_id]
+    /// pub struct UserExternalId {
+    ///     pub user_id: i32,
+    ///     pub name: String,
+    /// }
+    ///
+    /// assert_eq!(r#"INSERT INTO "users" ("name") VALUES (?) RETURNING "users"."user_id", "users"."name""#, User::insert_sql());
+    /// assert_eq!(r#"INSERT INTO "user_external_ids" ("user_id", "name") VALUES (?, ?) RETURNING "user_external_ids"."user_id", "user_external_ids"."name""#, UserExternalId::insert_sql());
+    /// # }}
     /// ```
     fn insert_sql() -> &'static str;
 
@@ -118,10 +132,11 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Schema;
     ///
-    /// assert_eq!("UPDATE users SET name = ? WHERE user_id = ?", User::update_by_id_sql());
+    /// assert_eq!(r#"UPDATE "users" SET "name" = ? WHERE "users"."user_id" = ? RETURNING "users"."user_id", "users"."name""#, User::update_by_id_sql());
+    /// # }}
     /// ```
     fn update_by_id_sql() -> &'static str;
 
@@ -130,10 +145,11 @@ pub trait Schema {
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::User;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Schema;
     ///
-    /// assert_eq!("DELETE FROM users WHERE user_id = ?", User::delete_by_id_sql());
+    /// assert_eq!(r#"DELETE FROM "users" WHERE "users"."user_id" = ?"#, User::delete_by_id_sql());
+    /// # }}
     /// ```
     fn delete_by_id_sql() -> &'static str;
 }
@@ -149,12 +165,7 @@ pub trait Schema {
 /// [SqlxCrud]: ../derive.SqlxCrud.html
 pub trait Crud<'e, E>
 where
-    Self: 'e
-        + Sized
-        + Send
-        + Unpin
-        + for<'r> FromRow<'r, <E::Database as Database>::Row>
-        + Schema,
+    Self: 'e + Sized + Send + Unpin + for<'r> FromRow<'r, <E::Database as Database>::Row> + Schema,
     <Self as Schema>::Id:
         Encode<'e, <E as Executor<'e>>::Database> + Type<<E as Executor<'e>>::Database>,
     E: Executor<'e> + 'e,
@@ -170,18 +181,16 @@ where
     /// wanted to modify the query you could use something like:
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::{Crud, Schema};
     ///
     /// let user = User { user_id: 1, name: "Test".to_string() };
-    /// let query = sqlx::query(User::insert_sql());
+    /// let query = sqlx::query_as::<_, User>(User::insert_sql());
     /// let query = user.insert_binds(query);
-    /// query.execute(&pool).await?;
+    /// let user = query.fetch_one(&pool).await?;
+    /// assert_eq!("Test", user.name);
     ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     ///
     /// This would bind `user_id`, `name` to the query in that order.
@@ -189,8 +198,8 @@ where
     /// [SqlxCrud]: ../derive.SqlxCrud.html
     fn insert_binds(
         &'e self,
-        query: Query<'e, E::Database, <E::Database as HasArguments<'e>>::Arguments>,
-    ) -> Query<'e, E::Database, <E::Database as HasArguments<'e>>::Arguments>;
+        query: QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>,
+    ) -> QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>;
 
     /// Given a query returns a new query with parameters suitable for an
     /// UPDATE bound to it. The [SqlxCrud] implementation will bind every
@@ -203,18 +212,16 @@ where
     /// wanted to modify the query you could use something like:
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::{Crud, Schema};
     ///
-    /// let user = User { user_id: 1, name: "Test".to_string() };
-    /// let query = sqlx::query(User::update_by_id_sql());
+    /// let user = User { user_id: 1, name: "other".to_string() };
+    /// let query = sqlx::query_as::<_, User>(User::update_by_id_sql());
     /// let query = user.update_binds(query);
-    /// query.execute(&pool).await?;
+    /// let user = query.fetch_one(&pool).await?;
+    /// assert_eq!("other", user.name);
     ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     ///
     /// This would bind `name`, `user_id` to the query in that order.
@@ -222,8 +229,8 @@ where
     /// [SqlxCrud]: ../derive.SqlxCrud.html
     fn update_binds(
         &'e self,
-        query: Query<'e, E::Database, <E::Database as HasArguments<'e>>::Arguments>,
-    ) -> Query<'e, E::Database, <E::Database as HasArguments<'e>>::Arguments>;
+        query: QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>,
+    ) -> QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>;
 
     /// Returns a future that resolves to an insert or `sqlx::Error` of the
     /// current instance.
@@ -231,24 +238,21 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::{Crud, Schema};
     ///
     /// let user = User { user_id: 1, name: "test".to_string() };
-    /// user.create(&pool).await?;
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// let user = user.create(&pool).await?;
+    /// assert_eq!("test", user.name);
+    /// # }}
     /// ```
-    fn create(&'e self, pool: E) -> CrudFut<'e, ()> {
+    fn create(&'e self, pool: E) -> CrudFut<'e, Self> {
         Box::pin(async move {
-            let query = sqlx::query(<Self as Schema>::insert_sql());
+            let query = sqlx::query_as::<E::Database, Self>(<Self as Schema>::insert_sql());
             let query = self.insert_binds(query);
-            query.execute(pool).await?;
+            let r = query.fetch_one(pool).await?;
 
-            Ok(())
+            Ok(r)
         })
     }
 
@@ -259,17 +263,13 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Crud;
     ///
     /// let all_users: Vec<User> = User::all(&pool).await?;
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
-    /// 
+    ///
     /// [try_collect]: https://docs.rs/futures/latest/futures/stream/trait.TryStreamExt.html#method.try_collect
     fn all(pool: E) -> TryCollectFut<'e, Self> {
         let stream =
@@ -289,21 +289,18 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Crud;
     ///
     /// let user: Option<User> = User::by_id(&pool, 1).await?;
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// assert!(user.is_some());
+    /// # }}
     /// ```
     fn by_id(pool: E, id: <Self as Schema>::Id) -> CrudFut<'e, Option<Self>> {
         Box::pin(
             sqlx::query_as::<E::Database, Self>(<Self as Schema>::select_by_id_sql())
                 .bind(id)
-                .fetch_optional(pool)
+                .fetch_optional(pool),
         )
     }
 
@@ -313,26 +310,23 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Crud;
     ///
     /// if let Some(mut user) = User::by_id(&pool, 1).await? {
     ///     user.name = "Harry".to_string();
-    ///     user.update(&pool).await?;
+    ///     let user = user.update(&pool).await?;
+    ///     assert_eq!("Harry", user.name);
     /// }
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
-    fn update(&'e self, pool: E) -> CrudFut<'e, ()> {
+    fn update(&'e self, pool: E) -> CrudFut<'e, Self> {
         Box::pin(async move {
-            let query = sqlx::query(<Self as Schema>::update_by_id_sql());
+            let query = sqlx::query_as::<E::Database, Self>(<Self as Schema>::update_by_id_sql());
             let query = self.update_binds(query);
-            query.execute(pool).await?;
+            let r = query.fetch_one(pool).await?;
 
-            Ok(())
+            Ok(r)
         })
     }
 
@@ -342,25 +336,17 @@ where
     /// # Example
     ///
     /// ```rust
-    /// # use sqlx_crud::doctest::{setup, User};
-    /// # tokio_test::block_on(async {
-    /// # let pool = setup().await;
+    /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::Crud;
     ///
     /// if let Some(user) = User::by_id(&pool, 1).await? {
     ///     user.delete(&pool).await?;
     /// }
     /// assert!(User::by_id(&pool, 1).await?.is_none());
-    ///
-    /// # Ok::<(), sqlx::Error>(())
-    /// # });
+    /// # }}
     /// ```
     fn delete(self, pool: E) -> CrudFut<'e, ()> {
         let query = sqlx::query(<Self as Schema>::delete_by_id_sql()).bind(self.id());
-        Box::pin(
-            query
-                .execute(pool)
-                .and_then(|_| future::ok(())),
-        )
+        Box::pin(query.execute(pool).and_then(|_| future::ok(())))
     }
 }
