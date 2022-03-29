@@ -6,9 +6,9 @@ representing a table in a sqlx database.
 
 ```rust
 use sqlx::FromRow;
-use sqlx_crud::Crud;
+use sqlx_crud::SqlxCrud;
 
-#[derive(Debug, FromRow, Crud)]
+#[derive(Debug, FromRow, SqlxCrud)]
 struct User {
     user_id: i32,
     name: String,

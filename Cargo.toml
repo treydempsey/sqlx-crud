@@ -6,12 +6,12 @@ members = [
 
 [package]
 name = "sqlx-crud"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 readme = "README.md"
 repository = "https://github.com/treydempsey/sqlx-crud"
 documentation = "https://docs.rs/sqlx-crud"
-description = "Derive macro for SQLx to implement Create, Read, Update, and Delete (CRUD) methods for you 🪄 📖 📝 ❌"
+description = "Derive macro for SQLx to implement Create, Read, Update, and Delete (CRUD) methods for you."
 license = "MIT"
 keywords = ["sqlx", "orm", "crud", "database"]
 categories = ["database", "asynchronous", "web-programming"]
