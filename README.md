@@ -73,7 +73,7 @@ to allow only building the doctest support code while running doctests.
 The tests can be run with:
 
 ```sh
-$ cargo test --features doctest
+$ cargo test
 ```
 
 ## Documentation

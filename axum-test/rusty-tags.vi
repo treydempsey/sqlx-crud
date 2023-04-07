@@ -226,7 +226,7 @@ CowBytesVisitor	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serde
 CowStrDeserializer	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.159/src/de/value.rs	/^pub struct CowStrDeserializer<'a, E> {$/;"	s
 CowStrVisitor	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.159/src/private/de.rs	/^    struct CowStrVisitor;$/;"	s
 Crud	/home/trey/code/sqlx-crud/src/traits.rs	/^pub trait Crud<'e, E>$/;"	t
-CrudFut	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type CrudFut<'e, T> = Pin<Box<dyn Future<Output = Result<T, sqlx::Error>> + 'e>>;$/;"	T
+CrudFut	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type CrudFut<'e, T> = Pin<Box<dyn Future<Output = Result<T, sqlx::Error>> + Send + 'e>>;$/;"	T
 CrudStream	/home/trey/code/sqlx-crud/src/traits.rs	/^pub type CrudStream<'e, T> =$/;"	T
 Cs	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-subscriber-0.3.16/src/filter/env/mod.rs	/^    struct Cs;$/;"	s
 CtrlBreak	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/signal/windows.rs	/^pub struct CtrlBreak {$/;"	s
@@ -2363,7 +2363,7 @@ build_threaded_runtime	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec82
 builder	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-subscriber-0.3.16/src/filter/env/mod.rs	/^    pub fn builder() -> Builder {$/;"	f
 builder	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-subscriber-0.3.16/src/fmt/mod.rs	/^    pub fn builder() -> SubscriberBuilder {$/;"	f
 busy_file_seek_error	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/fs/file/tests.rs	/^fn busy_file_seek_error() {$/;"	f
-by_id	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn by_id(pool: E, id: <Self as Schema>::Id) -> Pin<Box<dyn Future<Output = Result<Option<Self>, ::sqlx::Error>> + Send + 'e>> {$/;"	f
+by_id	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn by_id(pool: E, id: <Self as Schema>::Id) -> CrudFut<'e, Option<Self>> {$/;"	f
 by_mut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/anyhow-1.0.70/src/ptr.rs	/^    pub fn by_mut(&mut self) -> Mut<T> {$/;"	f
 by_mut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/anyhow-1.0.70/src/ptr.rs	/^    pub fn by_mut(self) -> Mut<'a, T> {$/;"	f
 by_ref	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/anyhow-1.0.70/src/ptr.rs	/^    pub fn by_ref(&self) -> Ref<T> {$/;"	f
@@ -2697,7 +2697,7 @@ create	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/s
 create	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/fs/open_options.rs	/^    pub fn create(&mut self, create: bool) -> &mut OpenOptions {$/;"	f
 create	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/fs/open_options/mock_open_options.rs	/^        pub fn create(&mut self, create: bool) -> &mut Self;$/;"	f
 create	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/net/windows/named_pipe.rs	/^    pub fn create(&self, addr: impl AsRef<OsStr>) -> io::Result<NamedPipeServer> {$/;"	f
-create	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn create(self, pool: E) -> Pin<Box<dyn Future<Output = Result<Self, ::sqlx::Error>> + Send + 'e>> {$/;"	f
+create	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn create(self, pool: E) -> CrudFut<'e, Self> {$/;"	f
 create_clock	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/driver.rs	/^    fn create_clock(_enable_pausing: bool, _start_paused: bool) -> Clock {$/;"	f
 create_clock	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/driver.rs	/^    fn create_clock(enable_pausing: bool, start_paused: bool) -> Clock {$/;"	f
 create_drop1	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/tests/task.rs	/^fn create_drop1() {$/;"	f
@@ -7046,9 +7046,9 @@ unset_tx_task	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1
 unsplit	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/io/split.rs	/^    pub fn unsplit(self, wr: WriteHalf<T>) -> T$/;"	f
 unsupported_type	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/axum-0.6.12/src/extract/path/de.rs	/^macro_rules! unsupported_type {$/;"	d
 unwrap_to_variant_closure	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_derive-1.0.159/src/de.rs	/^fn unwrap_to_variant_closure($/;"	f
-update	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update(&'e self, pool: E) -> CrudFut<'e, Self> {$/;"	f
-update_binds	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update_binds($/;"	f
+update	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update(self, pool: E) -> CrudFut<'e, Self> {$/;"	f
 update_by_id_sql	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update_by_id_sql() -> &'static str;$/;"	f
+update_query	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn update_query(self) -> <E::Database as HasArguments<'e>>::Arguments;$/;"	f
 upgrade	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/sync/mpsc/bounded.rs	/^    pub fn upgrade(&self) -> Option<Sender<T>> {$/;"	f
 upgrade	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/sync/mpsc/unbounded.rs	/^    pub fn upgrade(&self) -> Option<UnboundedSender<T>> {$/;"	f
 uptime	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-subscriber-0.3.16/src/fmt/time/mod.rs	/^pub fn uptime() -> Uptime {$/;"	f

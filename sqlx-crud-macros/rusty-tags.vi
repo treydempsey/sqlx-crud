@@ -2111,8 +2111,8 @@ unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-m
 unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/wrapper.rs	/^    fn unwrap_nightly(self) -> proc_macro::Span {$/;"	f
 unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/wrapper.rs	/^    fn unwrap_nightly(self) -> proc_macro::TokenStream {$/;"	f
 unwrap_stable	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/wrapper.rs	/^    fn unwrap_stable(self) -> fallback::TokenStream {$/;"	f
-update_binds	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_binds($/;"	f
 update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_by_id_sql() -> &'static str {$/;"	f
+update_query	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_query(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {$/;"	f
 validate_ident	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/fallback.rs	/^fn validate_ident(string: &str, raw: bool) {$/;"	f
 value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/marker.rs	/^mod value {$/;"	m
 value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src/lit.rs	/^    pub fn value(&self) -> String {$/;"	f

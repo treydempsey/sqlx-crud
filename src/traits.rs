@@ -5,12 +5,11 @@ use futures::stream::TryCollect;
 use futures::Future;
 use futures::{future, TryFutureExt, TryStreamExt};
 use sqlx::database::HasArguments;
-use sqlx::query::QueryAs;
 use sqlx::{Database, Encode, Executor, FromRow, IntoArguments, Type};
 
 /// Type alias for methods returning a single element. The future resolves to and
 /// `Result<T, sqlx::Error>`.
-pub type CrudFut<'e, T> = Pin<Box<dyn Future<Output = Result<T, sqlx::Error>> + 'e>>;
+pub type CrudFut<'e, T> = Pin<Box<dyn Future<Output = Result<T, sqlx::Error>> + Send + 'e>>;
 
 /// Type alias for a [`Stream`] returning items of type `Result<T, sqlxError>`.
 pub type CrudStream<'e, T> =
@@ -177,6 +176,8 @@ where
     /// TODO docs
     fn row_to_model(row: <E::Database as ::sqlx::Database>::Row) -> Result<Self, sqlx::Error>;
 
+    /// TODO docs
+    ///
     /// Given a query returns a new query with parameters suitable for an
     /// UPDATE bound to it. The [SqlxCrud] implementation will bind every
     /// column except for the primary key followed by the primary key to
@@ -191,22 +192,13 @@ where
     /// # sqlx_crud::doctest_setup! { |pool| {
     /// use sqlx_crud::{Crud, Schema};
     ///
-    /// let user = User { user_id: 1, name: "other".to_string() };
-    /// let query = sqlx::query_as::<_, User>(User::update_by_id_sql());
-    /// let query = user.update_binds(query);
-    /// let user = query.fetch_one(&pool).await?;
-    /// assert_eq!("other", user.name);
-    ///
     /// # }}
     /// ```
     ///
     /// This would bind `name`, `user_id` to the query in that order.
     ///
     /// [SqlxCrud]: ../derive.SqlxCrud.html
-    fn update_binds(
-        &'e self,
-        query: QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>,
-    ) -> QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>;
+    fn update_query(self) -> <E::Database as HasArguments<'e>>::Arguments;
 
     /// Returns a future that resolves to an insert or `sqlx::Error` of the
     /// current instance.
@@ -222,7 +214,7 @@ where
     /// assert_eq!("test", user.name);
     /// # }}
     /// ```
-    fn create(self, pool: E) -> Pin<Box<dyn Future<Output = Result<Self, ::sqlx::Error>> + Send + 'e>> {
+    fn create(self, pool: E) -> CrudFut<'e, Self> {
         Box::pin({
             let query_args = self.insert_query();
             ::sqlx::query_with::<E::Database, _>(Self::insert_sql(), query_args)
@@ -270,12 +262,12 @@ where
     /// assert!(user.is_some());
     /// # }}
     /// ```
-    fn by_id(pool: E, id: <Self as Schema>::Id) -> Pin<Box<dyn Future<Output = Result<Option<Self>, ::sqlx::Error>> + Send + 'e>> {
+    fn by_id(pool: E, id: <Self as Schema>::Id) -> CrudFut<'e, Option<Self>> {
         Box::pin({
             use ::sqlx::Arguments as _;
             let arg0 = id;
             let mut query_args = <E::Database as HasArguments<'e>>::Arguments::default();
-            query_args.reserve(1usize, 0 + ::sqlx::encode::Encode::<E::Database>::size_hint(&arg0));
+            query_args.reserve(1usize, ::sqlx::encode::Encode::<E::Database>::size_hint(&arg0));
             query_args.add(arg0);
             ::sqlx::query_with::<E::Database, _>(Self::select_by_id_sql(), query_args)
                 .try_map(Self::row_to_model)
@@ -298,14 +290,12 @@ where
     /// }
     /// # }}
     /// ```
-    fn update(&'e self, pool: E) -> CrudFut<'e, Self> {
-        Box::pin(async move {
-            let query = sqlx::query_as::<E::Database, Self>(<Self as Schema>::update_by_id_sql());
-            let query = self.update_binds(query);
-            let r = query.fetch_one(pool).await?;
-
-            Ok(r)
-        })
+    fn update(self, pool: E) -> CrudFut<'e, Self> {
+        Box::pin({
+            let query_args = self.update_query();
+            ::sqlx::query_with::<E::Database, _>(Self::update_by_id_sql(), query_args)
+                .try_map(Self::row_to_model)
+        }.fetch_one(pool))
     }
 
     /// Deletes a record from the database by ID and returns a future that
