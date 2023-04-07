@@ -130,6 +130,7 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
     let crate_name = &config.crate_name;
     let ident = &config.ident;
     let model_schema_ident = &config.model_schema_ident;
+    let db_ty = config.db_ty.sqlx_db();
     let id_column_ident = &config.id_column_ident;
     let id_ty = config
         .named
@@ -138,11 +139,6 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
         .map(|f| &f.ty)
         .expect("the id type");
 
-    let insert_binds = config
-        .named
-        .iter()
-        .flat_map(|f| &f.ident)
-        .map(|i| quote! { .bind(&self.#i) });
     let update_binds = config
         .named
         .iter()
@@ -150,7 +146,7 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
         .filter(|i| *i != id_column_ident)
         .map(|i| quote! { .bind(&self.#i) });
 
-    let query_try_get_unchecked = config
+    let row_try_get_unchecked = config
         .named
         .iter()
         .flat_map(|f| {
@@ -163,7 +159,8 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
         .map(|(i, (c, t))| {
             quote! { let #c = row.try_get_unchecked::<#t, _>(#i)?; }
         });
-    let construct_query_as_member = config.named.iter()
+
+    let columns_to_model_members = config.named.iter()
         .flat_map(|f| {
             match &f.ident {
                 Some(ident) => Some((ident, format_ident!("sqlx_query_as_{}", ident.to_string()))),
@@ -171,11 +168,20 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
             }
         })
         .map(|(c, v)| quote! { #c: #v });
-    let construct_query_as = quote! {
-        #ident { #(#construct_query_as_member),* }
+
+    let insert_query_args = config.named.iter()
+        .flat_map(|f| &f.ident)
+        .map(|i| quote! { query_args.add(self.#i); });
+
+    // TODO internal vs external ID
+    let insert_query_size = config.named.iter()
+        .flat_map(|f| &f.ident)
+        .map(|i| quote! { ::sqlx::encode::Encode::<#db_ty>::size_hint(&self.#i) });
+
+    let build_model = quote! {
+        #ident { #(#columns_to_model_members),* }
     };
 
-    let db_ty = config.db_ty.sqlx_db();
 
     quote! {
         #[automatically_derived]
@@ -221,12 +227,18 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
 
         #[automatically_derived]
         impl<'e> #crate_name::traits::Crud<'e, &'e ::sqlx::pool::Pool<#db_ty>> for #ident {
-            fn insert_binds(
-                &'e self,
-                query: ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments>
-            ) -> ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments> {
-                query
-                    #(#insert_binds)*
+            fn insert_query(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {
+                use ::sqlx::Arguments as _;
+                let mut query_args = <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments::default();
+                query_args.reserve(1usize, #(#insert_query_size)+*);
+                #(#insert_query_args)*
+                query_args
+            }
+
+            fn row_to_model(row: <#db_ty as ::sqlx::Database>::Row) -> Result<Self, ::sqlx::Error> {
+                use ::sqlx::Row;
+                #(#row_try_get_unchecked)*
+                Ok(#build_model)
             }
 
             fn update_binds(
@@ -236,12 +248,6 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
                 query
                     #(#update_binds)*
                     .bind(&self.#id_column_ident)
-            }
-
-            fn try_map(row: <#db_ty as ::sqlx::Database>::Row) -> Result<Self, ::sqlx::Error> {
-                use ::sqlx::Row;
-                #(#query_try_get_unchecked)*
-                Ok(#construct_query_as)
             }
         }
     }

@@ -165,41 +165,17 @@ pub trait Schema {
 /// [SqlxCrud]: ../derive.SqlxCrud.html
 pub trait Crud<'e, E>
 where
-    Self: 'e + Default + Sized + Send + Unpin + for<'r> FromRow<'r,<E::Database as Database>::Row> + Schema,
+    Self: 'e + Sized + Send + Unpin + for<'r> FromRow<'r,<E::Database as Database>::Row> + Schema,
     <Self as Schema>::Id:
         Encode<'e, <E as Executor<'e>>::Database> + Type<<E as Executor<'e>>::Database>,
     E: Executor<'e> + 'e,
     <E::Database as HasArguments<'e>>::Arguments: IntoArguments<'e, <E as Executor<'e>>::Database>,
 {
-    /// Given a query returns a new query with parameters suitable for an
-    /// INSERT bound to it. The [SqlxCrud] implementation will bind the
-    /// primary key, and each additional field to the query.
-    ///
-    /// # Example
-    ///
-    /// Typically you would just use `<Self as Crud>::insert()` but if you
-    /// wanted to modify the query you could use something like:
-    ///
-    /// ```rust
-    /// # sqlx_crud::doctest_setup! { |pool| {
-    /// use sqlx_crud::{Crud, Schema};
-    ///
-    /// let user = User { user_id: 1, name: "Test".to_string() };
-    /// let query = sqlx::query_as::<_, User>(User::insert_sql());
-    /// let query = user.insert_binds(query);
-    /// let user = query.fetch_one(&pool).await?;
-    /// assert_eq!("Test", user.name);
-    ///
-    /// # }}
-    /// ```
-    ///
-    /// This would bind `user_id`, `name` to the query in that order.
-    ///
-    /// [SqlxCrud]: ../derive.SqlxCrud.html
-    fn insert_binds(
-        &'e self,
-        query: QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>,
-    ) -> QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>;
+    /// TODO docs
+    fn insert_query(self) -> <E::Database as HasArguments<'e>>::Arguments;
+
+    /// TODO docs
+    fn row_to_model(row: <E::Database as ::sqlx::Database>::Row) -> Result<Self, sqlx::Error>;
 
     /// Given a query returns a new query with parameters suitable for an
     /// UPDATE bound to it. The [SqlxCrud] implementation will bind every
@@ -232,8 +208,6 @@ where
         query: QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>,
     ) -> QueryAs<'e, E::Database, Self, <E::Database as HasArguments<'e>>::Arguments>;
 
-    fn try_map(row: <E::Database as ::sqlx::Database>::Row) -> Result<Self, sqlx::Error>;
-
     /// Returns a future that resolves to an insert or `sqlx::Error` of the
     /// current instance.
     ///
@@ -248,14 +222,12 @@ where
     /// assert_eq!("test", user.name);
     /// # }}
     /// ```
-    fn create(&'e self, pool: E) -> CrudFut<'e, Self> {
-        Box::pin(async move {
-            let query = sqlx::query_as::<E::Database, Self>(<Self as Schema>::insert_sql());
-            let query = self.insert_binds(query);
-            let r = query.fetch_one(pool).await?;
-
-            Ok(r)
-        })
+    fn create(self, pool: E) -> Pin<Box<dyn Future<Output = Result<Self, ::sqlx::Error>> + Send + 'e>> {
+        Box::pin({
+            let query_args = self.insert_query();
+            ::sqlx::query_with::<E::Database, _>(Self::insert_sql(), query_args)
+                .try_map(Self::row_to_model)
+        }.fetch_one(pool))
     }
 
     /// Queries all records from the table and returns a future that returns
@@ -300,19 +272,13 @@ where
     /// ```
     fn by_id(pool: E, id: <Self as Schema>::Id) -> Pin<Box<dyn Future<Output = Result<Option<Self>, ::sqlx::Error>> + Send + 'e>> {
         Box::pin({
-            {
-                #[allow (clippy::all)]
-                {
-                    use ::sqlx::Arguments as _;
-                    let arg0 = id;
-                    let mut query_args = <E::Database as HasArguments<'e>>::Arguments::default();
-                    query_args.reserve(1usize, 0 + ::sqlx::encode::Encode::<E::Database>::size_hint(&arg0));
-                    query_args.add(arg0);
-                    ::sqlx::query_with::<E::Database, _>(
-                        Self::select_by_id_sql(), query_args)
-                        .try_map(Self::try_map)
-                }
-            }
+            use ::sqlx::Arguments as _;
+            let arg0 = id;
+            let mut query_args = <E::Database as HasArguments<'e>>::Arguments::default();
+            query_args.reserve(1usize, 0 + ::sqlx::encode::Encode::<E::Database>::size_hint(&arg0));
+            query_args.add(arg0);
+            ::sqlx::query_with::<E::Database, _>(Self::select_by_id_sql(), query_args)
+                .try_map(Self::row_to_model)
         }.fetch_optional(pool))
     }
 

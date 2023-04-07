@@ -3,9 +3,9 @@ use axum::Extension;
 use axum::Json;
 use axum::Router;
 use axum::Server;
-use axum::extract::Path;
+use axum::extract::{self, Path};
 use axum::http::StatusCode;
-use axum::response::IntoResponse;
+use axum::response::{IntoResponse, Response};
 use axum::routing;
 use serde::Deserialize;
 use serde::Serialize;
@@ -23,24 +23,14 @@ struct Task {
     pub task: String,
 }
 
-impl Default for Task {
-    fn default() -> Self {
-        Self { id: 0, task: "".to_string() }
+async fn new_task(Extension(pool): Extension<SqlitePool>, extract::Json(new_task): extract::Json<Task>) -> Response {
+    match new_task.create(&pool).await {
+        Ok(r) => (StatusCode::OK, Json(r)).into_response(),
+        Err(_) => (StatusCode::INTERNAL_SERVER_ERROR).into_response(),
     }
 }
 
-async fn task(Path(task_id): Path<i32>, Extension(pool): Extension<SqlitePool>) ->  impl IntoResponse {
-    let task = sqlx::query_as!(Task, r#"
-        SELECT tasks.id, tasks.task
-        FROM tasks
-        WHERE tasks.id = ?"#, task_id)
-        .fetch_optional(&pool)
-        .await
-        .unwrap();
-    (StatusCode::OK, Json(task))
-}
-
-async fn task_sqlx_crud(Path(task_id): Path<i64>, Extension(pool): Extension<SqlitePool>) ->  impl IntoResponse {
+async fn task(Path(task_id): Path<i64>, Extension(pool): Extension<SqlitePool>) ->  Response {
     match Task::by_id(&pool, task_id).await {
         Ok(Some(task)) => (StatusCode::OK, Json(task)).into_response(),
         Ok(None) => (StatusCode::NOT_FOUND).into_response(),
@@ -69,8 +59,8 @@ async fn main() -> anyhow::Result<()> {
 
     let app = Router::new()
         .route("/tasks", routing::get(tasks))
+        .route("/tasks", routing::post(new_task))
         .route("/tasks/:id", routing::get(task))
-        .route("/tasks/:id/crud", routing::get(task_sqlx_crud))
         .layer(Extension(pool));
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
