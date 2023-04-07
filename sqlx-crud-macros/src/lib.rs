@@ -150,6 +150,31 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
         .filter(|i| *i != id_column_ident)
         .map(|i| quote! { .bind(&self.#i) });
 
+    let query_try_get_unchecked = config
+        .named
+        .iter()
+        .flat_map(|f| {
+            match &f.ident {
+                Some(ident) => Some((format_ident!("sqlx_query_as_{}", ident.to_string()), &f.ty)),
+                None => None
+            }
+        })
+        .enumerate()
+        .map(|(i, (c, t))| {
+            quote! { let #c = row.try_get_unchecked::<#t, _>(#i)?; }
+        });
+    let construct_query_as_member = config.named.iter()
+        .flat_map(|f| {
+            match &f.ident {
+                Some(ident) => Some((ident, format_ident!("sqlx_query_as_{}", ident.to_string()))),
+                None => None
+            }
+        })
+        .map(|(c, v)| quote! { #c: #v });
+    let construct_query_as = quote! {
+        #ident { #(#construct_query_as_member),* }
+    };
+
     let db_ty = config.db_ty.sqlx_db();
 
     quote! {
@@ -211,6 +236,12 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
                 query
                     #(#update_binds)*
                     .bind(&self.#id_column_ident)
+            }
+
+            fn try_map(row: <#db_ty as ::sqlx::Database>::Row) -> Result<Self, ::sqlx::Error> {
+                use ::sqlx::Row;
+                #(#query_try_get_unchecked)*
+                Ok(#construct_query_as)
             }
         }
     }

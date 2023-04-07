@@ -2028,6 +2028,7 @@ trailing_bad_chars	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/In
 trailing_bad_chars	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/cases/traincase/mod.rs	/^    fn trailing_bad_chars() {$/;"	f
 trailing_punct	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/punctuated.rs	/^    pub fn trailing_punct(&self) -> bool {$/;"	f
 trim_right	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/cases/case/mod.rs	/^fn trim_right(convertable_string: &str) -> &str {$/;"	f
+try_map	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn try_map(row: <#db_ty as ::sqlx::Database>::Row) -> Result<Self, ::sqlx::Error> {$/;"	f
 type_params	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/generics.rs	/^    pub fn type_params(&self) -> TypeParams {$/;"	f
 type_params_mut	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/generics.rs	/^    pub fn type_params_mut(&mut self) -> TypeParamsMut {$/;"	f
 unary_expr	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.86/src/expr.rs	/^    fn unary_expr(input: ParseStream, allow_struct: AllowStruct) -> Result<Expr> {$/;"	f
