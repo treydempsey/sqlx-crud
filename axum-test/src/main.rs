@@ -41,8 +41,11 @@ async fn task(Path(task_id): Path<i32>, Extension(pool): Extension<SqlitePool>) 
 }
 
 async fn task_sqlx_crud(Path(task_id): Path<i64>, Extension(pool): Extension<SqlitePool>) ->  impl IntoResponse {
-    let task = Task::by_id(&pool, task_id).await.unwrap().unwrap();
-    (StatusCode::OK, Json(task))
+    match Task::by_id(&pool, task_id).await {
+        Ok(Some(task)) => (StatusCode::OK, Json(task)).into_response(),
+        Ok(None) => (StatusCode::NOT_FOUND).into_response(),
+        Err(_) => (StatusCode::INTERNAL_SERVER_ERROR).into_response(),
+    }
 }
 
 async fn tasks(Extension(pool): Extension<SqlitePool>) -> impl IntoResponse {

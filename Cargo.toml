@@ -2,6 +2,7 @@
 members = [
   ".",
   "sqlx-crud-macros",
+  "axum-test",
 ]
 
 [package]
