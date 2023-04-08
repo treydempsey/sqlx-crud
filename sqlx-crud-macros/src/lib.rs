@@ -140,25 +140,10 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
         .map(|f| &f.ty)
         .expect("the id type");
 
-    let row_try_get_unchecked = config
-        .named
-        .iter()
-        .flat_map(|f| f.ident.as_ref().map(|i| (format_ident!("sqlx_query_as_{}", i.to_string()), &f.ty)))
-        .enumerate()
-        .map(|(i, (c, t))| quote! { let #c = row.try_get_unchecked::<#t, _>(#i)?; });
-
-    let columns_to_model_members = config.named.iter()
-        .flat_map(|f| f.ident.as_ref().map(|i| (i, format_ident!("sqlx_query_as_{}", i.to_string()))))
-        .map(|(c, v)| quote! { #c: #v });
-
-    let build_model = quote! {
-        #ident { #(#columns_to_model_members),* }
-    };
-
     let insert_query_args = config.named.iter()
         .flat_map(|f| &f.ident)
         .filter(|i| config.external_id || *i != &config.id_column_ident)
-        .map(|i| quote! { query_args.add(self.#i); });
+        .map(|i| quote! { args.add(self.#i); });
 
     let insert_query_size = config.named.iter()
         .flat_map(|f| &f.ident)
@@ -168,9 +153,9 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
     let update_query_args = config.named.iter()
         .flat_map(|f| &f.ident)
         .filter(|i| *i != &config.id_column_ident)
-        .map(|i| quote! { query_args.add(self.#i); });
+        .map(|i| quote! { args.add(self.#i); });
 
-    let update_query_args_id = quote! { query_args.add(self.#id_column_ident); };
+    let update_query_args_id = quote! { args.add(self.#id_column_ident); };
 
     let update_query_size = config.named.iter()
         .flat_map(|f| &f.ident)
@@ -220,27 +205,21 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
 
         #[automatically_derived]
         impl<'e> #crate_name::traits::Crud<'e, &'e ::sqlx::pool::Pool<#db_ty>> for #ident {
-            fn insert_query(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {
+            fn insert_args(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {
                 use ::sqlx::Arguments as _;
-                let mut query_args = <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments::default();
-                query_args.reserve(1usize, #(#insert_query_size)+*);
+                let mut args = <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments::default();
+                args.reserve(1usize, #(#insert_query_size)+*);
                 #(#insert_query_args)*
-                query_args
+                args
             }
 
-            fn row_to_model(row: <#db_ty as ::sqlx::Database>::Row) -> Result<Self, ::sqlx::Error> {
-                use ::sqlx::Row;
-                #(#row_try_get_unchecked)*
-                Ok(#build_model)
-            }
-
-            fn update_query(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {
+            fn update_args(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {
                 use ::sqlx::Arguments as _;
-                let mut query_args = <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments::default();
-                query_args.reserve(1usize, #(#update_query_size)+*);
+                let mut args = <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments::default();
+                args.reserve(1usize, #(#update_query_size)+*);
                 #(#update_query_args)*
                 #update_query_args_id
-                query_args
+                args
             }
         }
     }

@@ -1325,7 +1325,7 @@ inner	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src
 inner_attrs_to_tokens	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src/expr.rs	/^    fn inner_attrs_to_tokens(attrs: &[Attribute], tokens: &mut TokenStream) {$/;"	f
 inner_unexpected	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src/parse.rs	/^fn inner_unexpected(buffer: &ParseBuffer) -> (Rc<Cell<Unexpected>>, Option<Span>) {$/;"	f
 insert	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src/punctuated.rs	/^    pub fn insert(&mut self, index: usize, value: T)$/;"	f
-insert_query	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn insert_query(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {$/;"	f
+insert_args	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn insert_args(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {$/;"	f
 insert_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn insert_sql() -> &'static str {$/;"	f
 int	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/parse.rs	/^fn int(input: Cursor) -> Result<Cursor, Reject> {$/;"	f
 into_compile_error	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src/error.rs	/^    pub fn into_compile_error(self) -> TokenStream {$/;"	f
@@ -1876,7 +1876,6 @@ resolved_at	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macr
 respan_token_stream	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src/lit.rs	/^        fn respan_token_stream(stream: TokenStream, span: Span) -> TokenStream {$/;"	f
 respan_token_tree	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.26/src/runtime.rs	/^fn respan_token_tree(mut token: TokenTree, span: Span) -> TokenTree {$/;"	f
 respan_token_tree	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src/lit.rs	/^        fn respan_token_tree(mut token: TokenTree, span: Span) -> TokenTree {$/;"	f
-row_to_model	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn row_to_model(row: <#db_ty as ::sqlx::Database>::Row) -> Result<Self, ::sqlx::Error> {$/;"	f
 rules	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/string/pluralize/mod.rs	/^macro_rules! rules{$/;"	d
 rules	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/string/singularize/mod.rs	/^macro_rules! rules{$/;"	d
 safe_convert	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/Inflector-0.11.4/src/suffix/foreignkey/mod.rs	/^fn safe_convert(safe_string: &str) -> String {$/;"	f
@@ -2111,8 +2110,8 @@ unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-m
 unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/wrapper.rs	/^    fn unwrap_nightly(self) -> proc_macro::Span {$/;"	f
 unwrap_nightly	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/wrapper.rs	/^    fn unwrap_nightly(self) -> proc_macro::TokenStream {$/;"	f
 unwrap_stable	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/wrapper.rs	/^    fn unwrap_stable(self) -> fallback::TokenStream {$/;"	f
+update_args	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_args(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {$/;"	f
 update_by_id_sql	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_by_id_sql() -> &'static str {$/;"	f
-update_query	/home/trey/code/sqlx-crud/sqlx-crud-macros/src/lib.rs	/^            fn update_query(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {$/;"	f
 validate_ident	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/fallback.rs	/^fn validate_ident(string: &str, raw: bool) {$/;"	f
 value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.56/src/marker.rs	/^mod value {$/;"	m
 value	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-1.0.109/src/lit.rs	/^    pub fn value(&self) -> String {$/;"	f
