@@ -1,21 +1,21 @@
 use anyhow::Context;
-use axum::Extension;
-use axum::Json;
-use axum::Router;
-use axum::Server;
 use axum::extract::Path;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 use axum::routing;
+use axum::Extension;
+use axum::Json;
+use axum::Router;
+use axum::Server;
 use serde::Deserialize;
 use serde::Serialize;
-use sqlx::FromRow;
 use sqlx::sqlite::SqlitePool;
 use sqlx::sqlite::SqlitePoolOptions;
-use sqlx_crud::SqlxCrud;
+use sqlx::FromRow;
 use sqlx_crud::Crud;
+use sqlx_crud::SqlxCrud;
 
-use std::net::SocketAddr;
+use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 
 #[derive(FromRow, Deserialize, Serialize, SqlxCrud)]
 struct Task {
@@ -37,7 +37,7 @@ async fn new_task(Extension(pool): Extension<SqlitePool>, Json(new_task): Json<T
     }
 }
 
-async fn task(Path(task_id): Path<i64>, Extension(pool): Extension<SqlitePool>) ->  Response {
+async fn task(Path(task_id): Path<i64>, Extension(pool): Extension<SqlitePool>) -> Response {
     match Task::by_id(&pool, task_id).await {
         Ok(Some(task)) => (StatusCode::OK, Json(task)).into_response(),
         Ok(None) => (StatusCode::NOT_FOUND).into_response(),
@@ -45,7 +45,11 @@ async fn task(Path(task_id): Path<i64>, Extension(pool): Extension<SqlitePool>) 
     }
 }
 
-async fn update_task(Path(task_id): Path<i64>, Extension(pool): Extension<SqlitePool>, Json(mut task): Json<Task>) ->  Response {
+async fn update_task(
+    Path(task_id): Path<i64>,
+    Extension(pool): Extension<SqlitePool>,
+    Json(mut task): Json<Task>,
+) -> Response {
     if let Ok(Some(_)) = Task::by_id(&pool, task_id).await {
         task.id = task_id;
         match task.update(&pool).await {
@@ -64,8 +68,6 @@ async fn main() -> anyhow::Result<()> {
         .await
         .context("could not connect to database")?;
 
-    tracing_subscriber::fmt::init();
-
     let app = Router::new()
         .route("/tasks", routing::get(tasks))
         .route("/tasks", routing::post(new_task))
@@ -73,11 +75,8 @@ async fn main() -> anyhow::Result<()> {
         .route("/tasks/:id", routing::get(task))
         .layer(Extension(pool));
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
-    tracing::debug!("Listening on {}", addr);
-    Server::bind(&addr)
-        .serve(app.into_make_service())
-        .await?;
+    let addr = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0)), 3000);
+    Server::bind(&addr).serve(app.into_make_service()).await?;
 
     Ok(())
 }

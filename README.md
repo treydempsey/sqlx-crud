@@ -29,6 +29,8 @@ if let Some(user) = User::by_id(&pool, 42) {
 
 * **Table Metadata for Reuse**
 
+* **Internal and External Database ID Assignment**
+
 This removes much of the common, repetitive code needed when dealing with
 the typical CRUD operations.
 
@@ -58,6 +60,10 @@ instructions.
 sqlx-crud uses the same features as SQLx `runtime-*` flags and are required because of
 the dependency on SQLx.
 
+## Examples
+
+You can find real-world examples under the [examples](./examples) directory.
+
 ## Source code
 
 Source code for sqlx-crud is available at
@@ -66,9 +72,7 @@ Source code for sqlx-crud is available at
 ## Tests
 
 The doctests depend on `SQLx` and it's `runtime-tokio-rustls` and `sqlite`
-features. Due to how `#[cfg(doctest)]` works you can't currently use it to
-conditionally include code to support doctests. I'm using a feature `doctest`
-to allow only building the doctest support code while running doctests.
+features.
 
 The tests can be run with:
 

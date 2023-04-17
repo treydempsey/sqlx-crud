@@ -140,24 +140,32 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
         .map(|f| &f.ty)
         .expect("the id type");
 
-    let insert_query_args = config.named.iter()
+    let insert_query_args = config
+        .named
+        .iter()
         .flat_map(|f| &f.ident)
         .filter(|i| config.external_id || *i != &config.id_column_ident)
         .map(|i| quote! { args.add(self.#i); });
 
-    let insert_query_size = config.named.iter()
+    let insert_query_size = config
+        .named
+        .iter()
         .flat_map(|f| &f.ident)
         .filter(|i| config.external_id || *i != &config.id_column_ident)
         .map(|i| quote! { ::sqlx::encode::Encode::<#db_ty>::size_hint(&self.#i) });
 
-    let update_query_args = config.named.iter()
+    let update_query_args = config
+        .named
+        .iter()
         .flat_map(|f| &f.ident)
         .filter(|i| *i != &config.id_column_ident)
         .map(|i| quote! { args.add(self.#i); });
 
     let update_query_args_id = quote! { args.add(self.#id_column_ident); };
 
-    let update_query_size = config.named.iter()
+    let update_query_size = config
+        .named
+        .iter()
         .flat_map(|f| &f.ident)
         .map(|i| quote! { ::sqlx::encode::Encode::<#db_ty>::size_hint(&self.#i) });
 

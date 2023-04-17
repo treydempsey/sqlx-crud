@@ -8,7 +8,7 @@
 - [x] Allow database assigned primary keys
 - [x] Crud::create() should return the assigned ID
 - [x] Remove doctest feature flag workaround
-- [ ] Axum Support (Send Futures)
+- [x] Axum Support (Send Futures)
 - [ ] Add a field attribute to ignore fields
 - [ ] Remove SQLx feature flag duplication
 - [ ] Break down the sqlx-crud-macros crate in to simpler units

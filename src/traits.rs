@@ -248,11 +248,15 @@ where
             use ::sqlx::Arguments as _;
             let arg0 = id;
             let mut args = <E::Database as HasArguments<'e>>::Arguments::default();
-            args.reserve(1usize, ::sqlx::encode::Encode::<E::Database>::size_hint(&arg0));
+            args.reserve(
+                1usize,
+                ::sqlx::encode::Encode::<E::Database>::size_hint(&arg0),
+            );
             args.add(arg0);
             ::sqlx::query_with::<E::Database, _>(Self::select_by_id_sql(), args)
                 .try_map(|r| Self::from_row(&r))
-        }.fetch_optional(pool))
+                .fetch_optional(pool)
+        })
     }
 
     /// Updates the database with the current instance state and returns a
@@ -281,7 +285,8 @@ where
             let args = self.update_args();
             ::sqlx::query_with::<E::Database, _>(Self::update_by_id_sql(), args)
                 .try_map(|r| Self::from_row(&r))
-        }.fetch_one(pool))
+                .fetch_one(pool)
+        })
     }
 
     /// Deletes a record from the database by ID and returns a future that
