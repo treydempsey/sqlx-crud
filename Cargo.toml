@@ -3,6 +3,7 @@ members = [
   ".",
   "sqlx-crud-macros",
   "examples/axum",
+  "examples/issue-9",
 ]
 
 [package]
