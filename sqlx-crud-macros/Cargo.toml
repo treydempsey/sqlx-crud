@@ -1,6 +1,6 @@
 [package]
 name = "sqlx-crud-macros"
-version = "0.3.1"
+version = "0.4.0"
 edition = "2021"
 repository = "https://github.com/treydempsey/sqlx-crud"
 documentation = "https://docs.rs/sqlx-crud"
@@ -17,4 +17,4 @@ proc-macro = true
 Inflector = "0.11"
 proc-macro2 = "1.0"
 quote = "1.0"
-syn = { version = "1.0", features = ["full"] }
+syn = { version = "2.0", features = ["full"] }

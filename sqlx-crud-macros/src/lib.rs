@@ -5,8 +5,8 @@ use quote::{format_ident, quote};
 use syn::punctuated::Punctuated;
 use syn::token::Comma;
 use syn::{
-    parse_macro_input, Attribute, Data, DataStruct, DeriveInput, Field, Fields, FieldsNamed, Ident,
-    Lit, LitStr, Meta, MetaNameValue,
+    parse_macro_input, Attribute, Data, DataStruct, DeriveInput, Expr, Field, Fields, FieldsNamed, Ident,
+    LitStr, Meta, MetaNameValue, Lit, ExprLit,
 };
 
 #[proc_macro_derive(SqlxCrud, attributes(database, external_id, id))]
@@ -130,7 +130,9 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
     let crate_name = &config.crate_name;
     let ident = &config.ident;
     let model_schema_ident = &config.model_schema_ident;
+    let db_ty = config.db_ty.sqlx_db();
     let id_column_ident = &config.id_column_ident;
+
     let id_ty = config
         .named
         .iter()
@@ -138,19 +140,34 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
         .map(|f| &f.ty)
         .expect("the id type");
 
-    let insert_binds = config
+    let insert_query_args = config
         .named
         .iter()
         .flat_map(|f| &f.ident)
-        .map(|i| quote! { .bind(&self.#i) });
-    let update_binds = config
-        .named
-        .iter()
-        .flat_map(|f| &f.ident)
-        .filter(|i| *i != id_column_ident)
-        .map(|i| quote! { .bind(&self.#i) });
+        .filter(|i| config.external_id || *i != &config.id_column_ident)
+        .map(|i| quote! { args.add(self.#i); });
 
-    let db_ty = config.db_ty.sqlx_db();
+    let insert_query_size = config
+        .named
+        .iter()
+        .flat_map(|f| &f.ident)
+        .filter(|i| config.external_id || *i != &config.id_column_ident)
+        .map(|i| quote! { ::sqlx::encode::Encode::<#db_ty>::size_hint(&self.#i) });
+
+    let update_query_args = config
+        .named
+        .iter()
+        .flat_map(|f| &f.ident)
+        .filter(|i| *i != &config.id_column_ident)
+        .map(|i| quote! { args.add(self.#i); });
+
+    let update_query_args_id = quote! { args.add(self.#id_column_ident); };
+
+    let update_query_size = config
+        .named
+        .iter()
+        .flat_map(|f| &f.ident)
+        .map(|i| quote! { ::sqlx::encode::Encode::<#db_ty>::size_hint(&self.#i) });
 
     quote! {
         #[automatically_derived]
@@ -196,21 +213,21 @@ fn build_sqlx_crud_impl(config: &Config) -> TokenStream2 {
 
         #[automatically_derived]
         impl<'e> #crate_name::traits::Crud<'e, &'e ::sqlx::pool::Pool<#db_ty>> for #ident {
-            fn insert_binds(
-                &'e self,
-                query: ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments>
-            ) -> ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments> {
-                query
-                    #(#insert_binds)*
+            fn insert_args(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {
+                use ::sqlx::Arguments as _;
+                let mut args = <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments::default();
+                args.reserve(1usize, #(#insert_query_size)+*);
+                #(#insert_query_args)*
+                args
             }
 
-            fn update_binds(
-                &'e self,
-                query: ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments>
-            ) -> ::sqlx::query::QueryAs<'e, #db_ty, Self, <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments> {
-                query
-                    #(#update_binds)*
-                    .bind(&self.#id_column_ident)
+            fn update_args(self) -> <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments {
+                use ::sqlx::Arguments as _;
+                let mut args = <#db_ty as ::sqlx::database::HasArguments<'e>>::Arguments::default();
+                args.reserve(1usize, #(#update_query_size)+*);
+                #(#update_query_args)*
+                #update_query_args_id
+                args
             }
         }
     }
@@ -249,7 +266,7 @@ impl<'a> Config<'a> {
         // Search for a field with the #[id] attribute
         let id_attr = &named
             .iter()
-            .find(|f| f.attrs.iter().any(|a| a.path.is_ident("id")))
+            .find(|f| f.attrs.iter().any(|a| a.path().is_ident("id")))
             .and_then(|f| f.ident.as_ref());
         // Otherwise default to the first field as the "id" column
         let id_column_ident = id_attr
@@ -262,7 +279,7 @@ impl<'a> Config<'a> {
             })
             .clone();
 
-        let external_id = attrs.iter().any(|a| a.path.is_ident("external_id"));
+        let external_id = attrs.iter().any(|a| a.path().is_ident("external_id"));
 
         Self {
             ident,
@@ -304,16 +321,17 @@ impl From<&str> for DbType {
 
 impl DbType {
     fn new(attrs: &[Attribute]) -> Self {
-        match attrs
-            .iter()
-            .find(|a| a.path.is_ident("database"))
-            .map(|a| a.parse_meta())
-        {
-            Some(Ok(Meta::NameValue(MetaNameValue {
-                lit: Lit::Str(s), ..
-            }))) => DbType::from(&*s.value()),
-            _ => Self::Sqlite,
-        }
+        let mut db_type = DbType::Sqlite;
+        attrs.iter()
+            .find(|a| a.path().is_ident("database"))
+            .map(|a| a.parse_nested_meta(|m| {
+                if let Some(path) = m.path.get_ident() {
+                    db_type = DbType::from(path.to_string().as_str());
+                }
+                Ok(())
+            }));
+
+        db_type
     }
 
     fn sqlx_db(&self) -> TokenStream2 {
