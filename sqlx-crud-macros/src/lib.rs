@@ -5,8 +5,8 @@ use quote::{format_ident, quote};
 use syn::punctuated::Punctuated;
 use syn::token::Comma;
 use syn::{
-    parse_macro_input, Attribute, Data, DataStruct, DeriveInput, Field, Fields, FieldsNamed, Ident,
-    Lit, LitStr, Meta, MetaNameValue,
+    parse_macro_input, Attribute, Data, DataStruct, DeriveInput, Expr, Field, Fields, FieldsNamed, Ident,
+    LitStr, Meta, MetaNameValue, Lit, ExprLit,
 };
 
 #[proc_macro_derive(SqlxCrud, attributes(database, external_id, id))]
@@ -266,7 +266,7 @@ impl<'a> Config<'a> {
         // Search for a field with the #[id] attribute
         let id_attr = &named
             .iter()
-            .find(|f| f.attrs.iter().any(|a| a.path.is_ident("id")))
+            .find(|f| f.attrs.iter().any(|a| a.path().is_ident("id")))
             .and_then(|f| f.ident.as_ref());
         // Otherwise default to the first field as the "id" column
         let id_column_ident = id_attr
@@ -279,7 +279,7 @@ impl<'a> Config<'a> {
             })
             .clone();
 
-        let external_id = attrs.iter().any(|a| a.path.is_ident("external_id"));
+        let external_id = attrs.iter().any(|a| a.path().is_ident("external_id"));
 
         Self {
             ident,
@@ -321,16 +321,17 @@ impl From<&str> for DbType {
 
 impl DbType {
     fn new(attrs: &[Attribute]) -> Self {
-        match attrs
-            .iter()
-            .find(|a| a.path.is_ident("database"))
-            .map(|a| a.parse_meta())
-        {
-            Some(Ok(Meta::NameValue(MetaNameValue {
-                lit: Lit::Str(s), ..
-            }))) => DbType::from(&*s.value()),
-            _ => Self::Sqlite,
-        }
+        let mut db_type = DbType::Sqlite;
+        attrs.iter()
+            .find(|a| a.path().is_ident("database"))
+            .map(|a| a.parse_nested_meta(|m| {
+                if let Some(path) = m.path.get_ident() {
+                    db_type = DbType::from(path.to_string().as_str());
+                }
+                Ok(())
+            }));
+
+        db_type
     }
 
     fn sqlx_db(&self) -> TokenStream2 {

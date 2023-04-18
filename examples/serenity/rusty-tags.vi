@@ -1691,8 +1691,8 @@ Handle	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/s
 Handle	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/util/idle_notified_set.rs	/^    type Handle = Arc<ListEntry<T>>;$/;"	t	implementation:ListEntry
 Handle	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/util/linked_list.rs	/^        type Handle = Pin<&'a Entry>;$/;"	t	implementation:tests::Entry
 Handle	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/util/linked_list.rs	/^    type Handle;$/;"	t	interface:Link
-Handler	/home/trey/code/sqlx-crud/examples/issue-9/src/main.rs	/^impl EventHandler for Handler {$/;"	c
-Handler	/home/trey/code/sqlx-crud/examples/issue-9/src/main.rs	/^struct Handler {$/;"	s
+Handler	/home/trey/code/sqlx-crud/examples/serenity/src/main.rs	/^impl EventHandler for Handler {$/;"	c
+Handler	/home/trey/code/sqlx-crud/examples/serenity/src/main.rs	/^struct Handler {$/;"	s
 Handshake	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/gateway/mod.rs	/^    Handshake,$/;"	e	enum:ConnectionStage
 HarmfulLink	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/guild/automod.rs	/^    HarmfulLink,$/;"	e	enum:Trigger
 HarmfulLink	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/guild/automod.rs	/^    HarmfulLink,$/;"	e	enum:TriggerType
@@ -4003,7 +4003,7 @@ User	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/
 User	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/user.rs	/^impl<'a> From<&'a CurrentUser> for User {$/;"	c
 User	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/user.rs	/^pub struct User {$/;"	s
 User	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/utils/argument_convert/user.rs	/^impl ArgumentConvert for User {$/;"	c
-User	/home/trey/code/sqlx-crud/examples/issue-9/src/main.rs	/^struct User {$/;"	s
+User	/home/trey/code/sqlx-crud/examples/serenity/src/main.rs	/^struct User {$/;"	s
 UserAndLog	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/framework/standard/structures/check.rs	/^    UserAndLog { user: String, log: String },$/;"	e	enum:Reason
 UserId	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/application/command.rs	/^impl From<CommandPermissionId> for UserId {$/;"	c
 UserId	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/application/interaction/application_command.rs	/^impl From<TargetId> for UserId {$/;"	c
@@ -5763,7 +5763,7 @@ data	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src
 data	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/util/try_lock.rs	/^    data: UnsafeCell<T>,$/;"	m	struct:TryLock
 datagram	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/net/unix/mod.rs	/^pub mod datagram;$/;"	n
 days	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/http/client.rs	/^            days: u64,$/;"	m	struct:Http::get_guild_prune_count::GetGuildPruneCountRequest
-db	/home/trey/code/sqlx-crud/examples/issue-9/src/main.rs	/^    db: Pool<Sqlite>,$/;"	m	struct:Handler
+db	/home/trey/code/sqlx-crud/examples/serenity/src/main.rs	/^    db: Pool<Sqlite>,$/;"	m	struct:Handler
 deadline	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/time/entry.rs	/^    deadline: Instant,$/;"	m	struct:TimerEntry
 deadline	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/time/entry.rs	/^    pub(crate) fn deadline(&self) -> Instant {$/;"	P	implementation:TimerEntry
 deadline	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/time/wheel/level.rs	/^    pub(crate) deadline: u64,$/;"	m	struct:Expiration
@@ -7770,7 +7770,7 @@ id	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/r
 id	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/task/list.rs	/^    id: u64,$/;"	m	struct:OwnedTasks
 id	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/task/mod.rs	/^mod id;$/;"	n
 id	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/util/slab.rs	/^        id: AtomicUsize,$/;"	m	struct:test::Foo
-id	/home/trey/code/sqlx-crud/examples/issue-9/src/main.rs	/^    id: i64,$/;"	m	struct:User
+id	/home/trey/code/sqlx-crud/examples/serenity/src/main.rs	/^    id: i64,$/;"	m	struct:User
 id	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn id(&self) -> Self::Id;$/;"	P	interface:Schema
 id_column	/home/trey/code/sqlx-crud/src/schema.rs	/^    pub id_column: &'s str,$/;"	m	struct:Metadata
 id_column	/home/trey/code/sqlx-crud/src/traits.rs	/^    fn id_column() -> &'static str;$/;"	P	interface:Schema
@@ -8471,7 +8471,7 @@ macros	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.
 macros	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/internal/mod.rs	/^pub mod macros;$/;"	n
 macros	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlx-0.6.3/src/lib.rs	/^mod macros;$/;"	n
 macros	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/lib.rs	/^pub mod macros;$/;"	n
-main	/home/trey/code/sqlx-crud/examples/issue-9/src/main.rs	/^async fn main() {$/;"	f
+main	/home/trey/code/sqlx-crud/examples/serenity/src/main.rs	/^async fn main() {$/;"	f
 maintenance	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/scheduler/multi_thread/worker.rs	/^    fn maintenance(&mut self, worker: &Worker) {$/;"	P	implementation:Core
 maintenance	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/scheduler/multi_thread/worker.rs	/^    fn maintenance(&self, mut core: Box<Core>) -> Box<Core> {$/;"	P	implementation:Context
 make_fixed_size	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/runtime/scheduler/multi_thread/queue.rs	/^fn make_fixed_size<T>(buffer: Box<[T]>) -> Box<[T; LOCAL_QUEUE_CAPACITY]> {$/;"	f
@@ -8658,7 +8658,7 @@ message	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11
 message	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/channel/reaction.rs	/^    pub async fn message(&self, http: impl AsRef<Http>) -> Result<Message> {$/;"	P	implementation:Reaction
 message	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/event.rs	/^    pub message: Message,$/;"	m	struct:MessageCreateEvent
 message	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/utils/argument_convert/mod.rs	/^mod message;$/;"	n
-message	/home/trey/code/sqlx-crud/examples/issue-9/src/main.rs	/^    async fn message(&self, _ctx: Context, _msg: serenity::model::channel::Message) {$/;"	P	implementation:Handler
+message	/home/trey/code/sqlx-crud/examples/serenity/src/main.rs	/^    async fn message(&self, _ctx: Context, _msg: serenity::model::channel::Message) {$/;"	P	implementation:Handler
 message_builder	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/utils/mod.rs	/^mod message_builder;$/;"	n
 message_collector	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/collector/mod.rs	/^pub mod message_collector;$/;"	n
 message_component	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/application/interaction/mod.rs	/^    pub fn message_component(self) -> Option<MessageComponentInteraction> {$/;"	P	implementation:Interaction
@@ -8865,7 +8865,7 @@ name	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/
 name	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/task/builder.rs	/^    name: Option<&'a str>,$/;"	m	struct:Builder
 name	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/task/builder.rs	/^    pub fn name(&self, name: &'a str) -> Self {$/;"	P	implementation:Builder
 name	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.27.0/src/task/join_set.rs	/^    pub fn name(self, name: &'a str) -> Self {$/;"	P	implementation:Builder
-name	/home/trey/code/sqlx-crud/examples/issue-9/src/main.rs	/^    name: String,$/;"	m	struct:User
+name	/home/trey/code/sqlx-crud/examples/serenity/src/main.rs	/^    name: String,$/;"	m	struct:User
 name_localizations	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/application/command.rs	/^    pub name_localizations: Option<HashMap<String, String>>,$/;"	m	struct:Command
 name_localizations	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/application/command.rs	/^    pub name_localizations: Option<std::collections::HashMap<String, String>>,$/;"	m	struct:CommandOption
 name_localizations	/home/trey/.cargo/registry/src/github.com-1ecc6299db9ec823/serenity-0.11.5/src/model/application/command.rs	/^    pub name_localizations: Option<std::collections::HashMap<String, String>>,$/;"	m	struct:CommandOptionChoice
