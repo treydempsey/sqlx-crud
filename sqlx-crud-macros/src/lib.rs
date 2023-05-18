@@ -73,7 +73,8 @@ fn build_sql_queries(config: &Config) -> TokenStream2 {
         config.named.iter().count() - 1
     };
     let insert_sql_binds = (0..insert_bind_cnt)
-        .map(|_| "?")
+        .enumerate()
+        .map(|(i, _)| config.db_ty.positional_arg_placeholder(i))
         .collect::<Vec<_>>()
         .join(", ");
 
@@ -82,7 +83,14 @@ fn build_sql_queries(config: &Config) -> TokenStream2 {
         .iter()
         .flat_map(|f| &f.ident)
         .filter(|i| *i != &config.id_column_ident)
-        .map(|i| format!("{} = ?", config.quote_ident(&i.to_string())))
+        .enumerate()
+        .map(|(i, ident)| {
+            format!(
+                "{} = {}",
+                config.quote_ident(&ident.to_string()),
+                config.db_ty.positional_arg_placeholder(i)
+            )
+        })
         .collect::<Vec<_>>()
         .join(", ");
 
@@ -104,18 +112,30 @@ fn build_sql_queries(config: &Config) -> TokenStream2 {
 
     let select_sql = format!("SELECT {} FROM {}", column_list, table_name);
     let select_by_id_sql = format!(
-        "SELECT {} FROM {} WHERE {} = ? LIMIT 1",
-        column_list, table_name, id_column
+        "SELECT {} FROM {} WHERE {} = {} LIMIT 1",
+        column_list,
+        table_name,
+        id_column,
+        config.db_ty.positional_arg_placeholder(0)
     );
     let insert_sql = format!(
         "INSERT INTO {} ({}) VALUES ({}) RETURNING {}",
         table_name, insert_column_list, insert_sql_binds, column_list
     );
     let update_by_id_sql = format!(
-        "UPDATE {} SET {} WHERE {} = ? RETURNING {}",
-        table_name, update_sql_binds, id_column, column_list
+        "UPDATE {} SET {} WHERE {} = {} RETURNING {}",
+        table_name,
+        update_sql_binds,
+        id_column,
+        config.db_ty.positional_arg_placeholder(0),
+        column_list
     );
-    let delete_by_id_sql = format!("DELETE FROM {} WHERE {} = ?", table_name, id_column);
+    let delete_by_id_sql = format!(
+        "DELETE FROM {} WHERE {} = {}",
+        table_name,
+        id_column,
+        config.db_ty.positional_arg_placeholder(0)
+    );
 
     quote! {
         select_sql: #select_sql,
@@ -322,14 +342,17 @@ impl From<&str> for DbType {
 impl DbType {
     fn new(attrs: &[Attribute]) -> Self {
         let mut db_type = DbType::Sqlite;
-        attrs.iter()
+        attrs
+            .iter()
             .find(|a| a.path().is_ident("database"))
-            .map(|a| a.parse_nested_meta(|m| {
-                if let Some(path) = m.path.get_ident() {
-                    db_type = DbType::from(path.to_string().as_str());
-                }
-                Ok(())
-            }));
+            .map(|a| {
+                a.parse_nested_meta(|m| {
+                    if let Some(path) = m.path.get_ident() {
+                        db_type = DbType::from(path.to_string().as_str());
+                    }
+                    Ok(())
+                })
+            });
 
         db_type
     }
@@ -351,6 +374,16 @@ impl DbType {
             Self::MySql => format!("`{}`", &ident),
             Self::Postgres => format!(r#""{}""#, &ident),
             Self::Sqlite => format!(r#""{}""#, &ident),
+        }
+    }
+
+    fn positional_arg_placeholder(&self, index: usize) -> String {
+        match self {
+            DbType::Any => "?".to_string(),
+            DbType::Mssql => "?".to_string(),
+            DbType::MySql => "?".to_string(),
+            DbType::Postgres => format!("${}", index + 1),
+            DbType::Sqlite => "?".to_string(),
         }
     }
 }
